@@ -1,0 +1,57 @@
+id: celica-street-build
+name: Celica Street Build
+repository: wildc4t-workshop/celica-street-build
+repository_type: engineering-project
+status: active
+phase: selected
+checkpoint: 2026-08-26
+
+task_prefix: STREET-
+
+objective: >-
+  Complete the final major drivetrain and controls build of the 2000 Celica GT-S
+  as a reliable, refined turbo street car with approximately 500 whp maximum
+  capability, while keeping normal operation conservative, street-friendly,
+  serviceable, and easy to live with.
+
+current_direction:
+  - Keep the current car intact and usable while the replacement drivetrain package is developed offline.
+  - Use the spare Celica subframe as the drivetrain integration buck rather than trying to duplicate every chassis-side supporting system.
+  - Validate the return-style fuel system and EMU Black first on the current engine using the MWR adapter.
+  - Treat the MWR adapter as an interim commissioning tool, not the intended final harness architecture.
+  - Build the final configuration around the sleeved/forged 2ZZ, E153, DBW, flex fuel, EMU Black, and a purpose-built custom harness.
+  - Preserve A/C and factory body/cluster functionality where practical.
+  - Target approximately 500 whp maximum capability, with a conservative low-boost street mode as the normal personality.
+  - Continue evaluating the modular sidewinder hot-side architecture without treating exploration as commitment.
+  - Prefer future refinement and modular turbo changes over another fundamental drivetrain rebuild.
+
+proven_or_owned_baseline:
+  - Built sleeved 2ZZ with forged low-compression pistons and upgraded rods.
+  - E153 factory-LSD transmission with MWR clutch/flywheel, mounts/adapters, and axles.
+  - Complete spare Celica subframe with power-steering rack.
+  - ECUMaster EMU Black, ECUMaster printed flying-lead harness, and MWR EMU adapter.
+  - MWR return-style fuel hardware with MWR rail, AEM FPR, and AEM fuel pump.
+  - 2003-2005 Celica DBW pedal and Corolla 2ZZ intake runners.
+  - Moroso upgraded oil pan.
+  - Mishimoto radiator already installed on the current car.
+  - Current TurboKits.com T28-flanged architecture remains a known viable fallback.
+  - Cheap cast TD05-style manifold and 20G turbo are available as development hardware.
+
+uncertain_verify:
+  - Built-engine compression ratio is remembered as approximately 9.5:1.
+  - Engine valves are believed to be upgraded stainless valves.
+  - Upgraded balancer is believed to be ATI.
+  - Check and record built-engine valve clearance before final installation/commissioning.
+
+open_architecture:
+  - final turbo and hot-side architecture
+  - final DBW throttle body and intake/plenum architecture
+  - final charge-cooling architecture
+  - exact custom-harness topology and EMU I/O allocation
+  - final instrumentation/protection sensor set
+  - final integrated display strategy
+  - detailed chassis-side transfer list for swap day
+
+dashboard:
+  task_file: tasks.csv
+  durable_state: PROJECT.md
