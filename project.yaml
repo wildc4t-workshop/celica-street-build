@@ -18,6 +18,7 @@ objective: >-
 current_direction:
   - Keep the current car intact and usable while the replacement drivetrain package is developed offline.
   - Use the spare Celica subframe as the drivetrain integration buck rather than trying to duplicate every chassis-side supporting system.
+  - Preserve a pre-EMU electrical/body-function baseline before removing the known-good PowerFC architecture.
   - Validate the return-style fuel system and EMU Black first on the current engine using the MWR adapter.
   - Treat the MWR adapter as an interim commissioning tool, not the intended final harness architecture.
   - Build the final configuration around the sleeved/forged 2ZZ, E153, DBW, flex fuel, EMU Black, and a purpose-built custom harness.
@@ -56,3 +57,4 @@ open_architecture:
 dashboard:
   task_file: tasks.csv
   durable_state: PROJECT.md
+  agent_instructions: AGENTS.md
