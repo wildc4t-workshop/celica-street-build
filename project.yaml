@@ -7,6 +7,7 @@ phase: selected
 checkpoint: 2026-08-26
 
 task_prefix: STREET-
+decision_prefix: DEC-STREET-
 
 objective: >-
   Complete the final major drivetrain and controls build of the 2000 Celica GT-S
