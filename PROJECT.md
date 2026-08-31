@@ -2,7 +2,7 @@
 
 **Vehicle:** 2000 US-spec Toyota Celica GT-S  
 **Role:** finished street car and useful engineering exercise platform  
-**Checkpoint:** 2026-08-26
+**Checkpoint:** 2026-08-31
 
 ## 1. Objective
 
@@ -119,10 +119,23 @@ The following are current commitments:
 - Remove the temporary adapter architecture.
 - Wire EMU Black directly through a purpose-built custom harness.
 - Add DBW, flex fuel, and final instrumentation/protection functions.
-- Define actual EMU I/O allocation before buying a large sensor package.
+- Use the 2000 Celica EWD as the vehicle-year baseline and the 2005 Celica EWD deliberately where late 2ZZ hardware is selected.
+- Define actual EMU I/O allocation before buying the broad final sensor package.
 - Let the final sensor/protection strategy follow the real I/O map, available CAN expansion, and tuner input.
 
-Oil pressure, oil temperature, fuel pressure, EGT, and similar channels are currently **instrumentation candidates**, not frozen requirements.
+### Custom-harness connector verification
+
+The first controlled connector-identification pass is underway. Unwired Ballenger Motorsports connector kits have been ordered for the currently expected OEM engine-device interfaces: crank/cam, VVT/VVL, VVTL/oil-pressure switch family, coolant temperature, late 2ZZ knock, ignition coil, late 2ZZ DBW throttle, accelerator pedal, and alternator control.
+
+This purchase is a **verification set**, not a production harness order. Connector part numbers are supported by the 2000/2005 Toyota EWDs and supplier cross-references, but actual hardware fit, terminal/seal families, wire compatibility, and production quantities remain to be physically verified. The controlled register and verification procedure are maintained in [`HARNESS_CONNECTORS.md`](HARNESS_CONNECTORS.md).
+
+The intended end state is a rebuildable full harness BOM that preserves device, housing, terminal, seal, wire, pin map, shielding/grounding, branch protection, tooling, and verification evidence without requiring chat history.
+
+### Instrumentation / sensing direction
+
+A dedicated external **MAP** and dedicated **EMAP/exhaust-pressure** measurement are part of the current sensing direction, with EMU Black's internal pressure sensor available for barometric/reference use if the final I/O strategy supports that arrangement. EGT provision is also desired for turbo/hot-side development and protection work.
+
+Exact MAP/EMAP sensors, pressure ranges, EGT interface/channel count, oil/fuel pressure instrumentation, oil temperature, and other expansion channels are **not yet hardware-frozen**. Those choices remain downstream of final EMU I/O/CAN allocation and tuner review.
 
 ## 6. Known Replacement-Drivetrain Hardware
 
@@ -276,7 +289,7 @@ Do not force these decisions before the work actually requires them:
 - final intake/plenum/throttle-body architecture;
 - final intercooling architecture;
 - exact custom-harness topology and EMU I/O allocation;
-- final instrumentation, protection, and display strategy;
+- final aftermarket sensor hardware/ranges, CAN expansion, protection logic, and display strategy;
 - detailed chassis-side transfer list for final swap day.
 
 The project should mature these decisions as evidence becomes available rather than pretending they are already frozen.
