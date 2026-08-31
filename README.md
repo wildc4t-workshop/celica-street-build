@@ -30,8 +30,9 @@ The finished car should be capable of roughly **500 whp**, but maximum output is
 - The built 2ZZ, E153, and spare subframe form the replacement drivetrain module.
 - The current car stays intact and usable as long as practical.
 - A full custom engine/control harness is the intended final architecture.
+- OEM engine-device connectors are being verified from Toyota EWD identification through supplier cross-reference and physical test fit before production quantities are purchased.
 
-The exact turbo, hot-side, intake, charge-cooling, and detailed instrumentation architecture remain open until explicitly selected.
+The exact turbo, hot-side, intake, charge-cooling, aftermarket sensor hardware, final EMU I/O/CAN allocation, and detailed protection/display architecture remain open until explicitly selected.
 
 ## Source of Truth
 
@@ -40,6 +41,7 @@ The exact turbo, hot-side, intake, charge-cooling, and detailed instrumentation 
 - [`project.yaml`](project.yaml) — machine-readable project state for the dashboard.
 - [`AGENTS.md`](AGENTS.md) — collaboration and engineering-record rules.
 - [`PRE_EMU_BASELINE.md`](PRE_EMU_BASELINE.md) — minimum evidence to capture before removing the known-good PowerFC architecture.
+- [`HARNESS_CONNECTORS.md`](HARNESS_CONNECTORS.md) — controlled 2ZZ/DBW connector identification, physical-verification register, and production-harness BOM starting point.
 
 Related repositories:
 
