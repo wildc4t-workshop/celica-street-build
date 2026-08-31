@@ -4,7 +4,7 @@ repository: wildc4t-workshop/celica-street-build
 repository_type: engineering-project
 status: active
 phase: selected
-checkpoint: 2026-08-26
+checkpoint: 2026-08-31
 
 task_prefix: STREET-
 decision_prefix: DEC-STREET-
@@ -22,6 +22,9 @@ current_direction:
   - Validate the return-style fuel system and EMU Black first on the current engine using the MWR adapter.
   - Treat the MWR adapter as an interim commissioning tool, not the intended final harness architecture.
   - Build the final configuration around the sleeved/forged 2ZZ, E153, DBW, flex fuel, EMU Black, and a purpose-built custom harness.
+  - Develop the custom-harness BOM through factory-document identification followed by physical connector and terminal verification before production quantities are purchased.
+  - Use the 2000 Celica EWD as the vehicle-year electrical baseline and use 2005 documentation deliberately for selected late-2ZZ hardware such as DBW and the later knock-sensor architecture.
+  - Plan for dedicated external MAP and EMAP sensing and EGT provision while leaving exact sensors ranges CAN expansion and final I/O allocation open until the controls architecture and tuner review are mature.
   - Preserve A/C and factory body/cluster functionality where practical.
   - Target approximately 500 whp maximum capability, with a conservative low-boost street mode as the normal personality.
   - Continue evaluating the modular sidewinder hot-side architecture without treating exploration as commitment.
@@ -39,6 +42,9 @@ proven_or_owned_baseline:
   - Current TurboKits.com T28-flanged architecture remains a known viable fallback.
   - Cheap cast TD05-style manifold and 20G turbo are available as development hardware.
 
+ordered_verify:
+  - First-pass unwired Ballenger connector kits for the expected OEM 2ZZ and late-DBW engine-device interfaces; physical fit and terminal ecosystem remain pending verification.
+
 uncertain_verify:
   - Built-engine compression ratio is remembered as approximately 9.5:1.
   - Engine valves are believed to be upgraded stainless valves.
@@ -50,11 +56,12 @@ open_architecture:
   - final DBW throttle body and intake/plenum architecture
   - final charge-cooling architecture
   - exact custom-harness topology and EMU I/O allocation
-  - final instrumentation/protection sensor set
-  - final integrated display strategy
+  - final aftermarket sensor hardware ranges and CAN expansion
+  - final protection logic and integrated display strategy
   - detailed chassis-side transfer list for swap day
 
 dashboard:
   task_file: tasks.csv
   durable_state: PROJECT.md
   agent_instructions: AGENTS.md
+  harness_connector_register: HARNESS_CONNECTORS.md
