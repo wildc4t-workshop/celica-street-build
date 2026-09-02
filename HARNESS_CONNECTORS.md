@@ -2,7 +2,7 @@
 
 **Vehicle basis:** 2000 US-spec Toyota Celica GT-S  
 **Final controls direction:** ECUMaster EMU Black, purpose-built engine/control harness, DBW, flex fuel  
-**Checkpoint:** 2026-08-31
+**Checkpoint:** 2026-09-01
 
 ## Purpose
 
@@ -18,6 +18,12 @@ The objective is not merely to identify connectors that look correct. Each produ
 
 Do not promote a connector to `PRODUCTION-APPROVED` based on appearance or catalog cross-reference alone.
 
+## Current physical status
+
+- First-pass Ballenger Motorsports connector kits **received 2026-09-01**.
+- Kits are currently grouped in a **large ziplock bag on top of the built engine**.
+- Physical-fit and terminal verification have **not yet been performed**.
+
 ## Factory references
 
 Primary factory references for this pass:
@@ -29,19 +35,19 @@ The 2000 EWD remains authoritative for the chassis/year baseline. The 2005 EWD i
 
 ## First-pass OEM connector verification
 
-The following **unwired Ballenger Motorsports connector kits** were ordered as physical samples. One kit per unique housing is sufficient for initial fit verification; shared housings are intentionally not duplicated in this purchase pass.
+The following **unwired Ballenger Motorsports connector kits** were ordered as physical samples and have now been received. One kit per unique housing is sufficient for initial fit verification; shared housings are intentionally not duplicated in this purchase pass.
 
 | Group | Intended device(s) | Toyota housing PN | 2000 EWD basis | 2005 EWD basis | Ballenger kit | Current status | Notes |
 |---|---|---:|---|---|---|---|---|
-| H01 | Crankshaft position sensor / camshaft position sensor | **90980-10947** | C4 crank; C1 cam | C4 crank; C1 cam | **CONN-75800** | FACTORY-DOC + SUPPLIER-CROSS-REFERENCE; PHYSICAL-FIT PENDING | Same housing used for crank and cam. Verify both actual sensors. |
-| H02 | VVT oil-control valve / VVL oil-control valve | **90980-11162** | C3 VVT; C2 VVL | C3 VVT; C2 VVL | **CONN-76007** | FACTORY-DOC + SUPPLIER-CROSS-REFERENCE; PHYSICAL-FIT PENDING | Same housing used for both OCVs. Verify both devices. |
-| H03 | VVTL oil-pressure switch / OEM oil-pressure switch | **90980-11363** | O2 oil-pressure switch; the 2000 EWD also assigns this housing to E7 engine-oil-level warning switch | E7 VVTL pressure switch; O2 oil-pressure switch | **CONN-76068** | FACTORY-DOC + SUPPLIER-CROSS-REFERENCE; PHYSICAL-FIT PENDING | Ballenger also explicitly lists the kit for 2ZZ OPS and lift/MOPS applications. Verify both intended final-build switches. |
-| H04 | Engine coolant temperature sensor | **90980-11062** | E6 | E6 | **CONN-75820** | FACTORY-DOC + SUPPLIER-CROSS-REFERENCE; PHYSICAL-FIT PENDING | Retained OEM Toyota ECT sensor architecture. |
-| H05 | Late 2ZZ knock sensor | **90980-11875** | **Not the 2000 knock housing**; 2000 K1 is 90980-11166 | K1 2ZZ-GE | **CONN-75757** | FACTORY-DOC + SUPPLIER-CROSS-REFERENCE; PHYSICAL-FIT PENDING | Final build intentionally targets the later 2-wire 2ZZ knock architecture. Toyota also uses this housing number for factory injectors. |
-| H06 | Ignition coil / integrated igniter | **90980-11885** | I2-I5 | I2-I5 | **CONN-75727** | FACTORY-DOC + SUPPLIER-CROSS-REFERENCE; PHYSICAL-FIT PENDING | One sample will validate housing fit; production harness requires four coil connectors. |
-| H07 | 2005 2ZZ DBW throttle body / throttle-position assembly | **90980-11858** | Not part of the 2000 cable-throttle engine architecture | T1 2ZZ-GE | **CONN-75805** | FACTORY-DOC + SUPPLIER-CROSS-REFERENCE; PHYSICAL-FIT PENDING | Selected late-engine architecture; verify against the actual throttle body chosen for the final intake. |
-| H08 | 2005 accelerator-pedal position sensor | **90980-11144** | Not part of the 2000 cable-throttle engine architecture | A17 | **CONN-76021** | FACTORY-DOC + SUPPLIER-CROSS-REFERENCE; PHYSICAL-FIT PENDING | Verify against the owned 2003-2005 Celica DBW pedal. |
-| H09 | Alternator / generator control connector | **90980-11349** | G2 | G2 | **CONN-75736** | FACTORY-DOC + SUPPLIER-CROSS-REFERENCE; PHYSICAL-FIT PENDING | Verify against the alternator intended for the final drivetrain. |
+| H01 | Crankshaft position sensor / camshaft position sensor | **90980-10947** | C4 crank; C1 cam | C4 crank; C1 cam | **CONN-75800** | FACTORY-DOC + SUPPLIER-CROSS-REFERENCE; KIT RECEIVED; PHYSICAL-FIT PENDING | Same housing used for crank and cam. Verify both actual sensors. |
+| H02 | VVT oil-control valve / VVL oil-control valve | **90980-11162** | C3 VVT; C2 VVL | C3 VVT; C2 VVL | **CONN-76007** | FACTORY-DOC + SUPPLIER-CROSS-REFERENCE; KIT RECEIVED; PHYSICAL-FIT PENDING | Same housing used for both OCVs. Verify both devices. |
+| H03 | VVTL oil-pressure switch / OEM oil-pressure switch | **90980-11363** | O2 oil-pressure switch; the 2000 EWD also assigns this housing to E7 engine-oil-level warning switch | E7 VVTL pressure switch; O2 oil-pressure switch | **CONN-76068** | FACTORY-DOC + SUPPLIER-CROSS-REFERENCE; KIT RECEIVED; PHYSICAL-FIT PENDING | Ballenger also explicitly lists the kit for 2ZZ OPS and lift/MOPS applications. Verify both intended final-build switches. |
+| H04 | Engine coolant temperature sensor | **90980-11062** | E6 | E6 | **CONN-75820** | FACTORY-DOC + SUPPLIER-CROSS-REFERENCE; KIT RECEIVED; PHYSICAL-FIT PENDING | Retained OEM Toyota ECT sensor architecture. |
+| H05 | Late 2ZZ knock sensor | **90980-11875** | **Not the 2000 knock housing**; 2000 K1 is 90980-11166 | K1 2ZZ-GE | **CONN-75757** | FACTORY-DOC + SUPPLIER-CROSS-REFERENCE; KIT RECEIVED; PHYSICAL-FIT PENDING | Final build intentionally targets the later 2-wire 2ZZ knock architecture. Toyota also uses this housing number for factory injectors. |
+| H06 | Ignition coil / integrated igniter | **90980-11885** | I2-I5 | I2-I5 | **CONN-75727** | FACTORY-DOC + SUPPLIER-CROSS-REFERENCE; KIT RECEIVED; PHYSICAL-FIT PENDING | One sample will validate housing fit; production harness requires four coil connectors. |
+| H07 | 2005 2ZZ DBW throttle body / throttle-position assembly | **90980-11858** | Not part of the 2000 cable-throttle engine architecture | T1 2ZZ-GE | **CONN-75805** | FACTORY-DOC + SUPPLIER-CROSS-REFERENCE; KIT RECEIVED; PHYSICAL-FIT PENDING | Selected late-engine architecture; verify against the actual throttle body chosen for the final intake. |
+| H08 | 2005 accelerator-pedal position sensor | **90980-11144** | Not part of the 2000 cable-throttle engine architecture | A17 | **CONN-76021** | FACTORY-DOC + SUPPLIER-CROSS-REFERENCE; KIT RECEIVED; PHYSICAL-FIT PENDING | Verify against the owned 2003-2005 Celica DBW pedal. |
+| H09 | Alternator / generator control connector | **90980-11349** | G2 | G2 | **CONN-75736** | FACTORY-DOC + SUPPLIER-CROSS-REFERENCE; KIT RECEIVED; PHYSICAL-FIT PENDING | Verify against the alternator intended for the final drivetrain. |
 
 ## Supplier-reported housing / terminal / seal register
 
@@ -49,15 +55,15 @@ This table records what Ballenger says is contained in each ordered kit. It is u
 
 | Group | Ballenger housing SKU | Supplier family / attribution | Supplied terminal | Supplied seal | Supplier terminal/wire range | Status |
 |---|---|---|---|---|---|---|
-| H01 | **CONN-100510** | Sumitomo TS, supplier-identified | **CONN-11856** | **CONN-00145** | 20–16 AWG | SUPPLIER-CROSS-REFERENCE; VERIFY RECEIVED KIT |
-| H02 | **CONN-100927** | Japanese VVT housing; exact OEM manufacturer TBD | **CONN-11856** | **CONN-00145** | 20–16 AWG | SUPPLIER-CROSS-REFERENCE; VERIFY RECEIVED KIT |
-| H03 | **CONN-100724** | Toyota 090/TS-type pressure-switch application; OEM manufacturer TBD | **CONN-11856** | **CONN-00145** | terminal 20–16 AWG; connector listing 22–16 AWG | SUPPLIER-CROSS-REFERENCE; VERIFY RECEIVED KIT |
-| H04 | **CONN-100317** | 1.8 mm SSC / Econoseal-type application; OEM manufacturer TBD | **CONN-00127** | **CONN-00119** | 20–16 AWG | SUPPLIER-CROSS-REFERENCE; VERIFY RECEIVED KIT |
-| H05 | **CONN-11855** | Toyota-style 2.3 mm sealed application; OEM manufacturer TBD | **CONN-11856** | **CONN-00119** | 20–16 AWG | SUPPLIER-CROSS-REFERENCE; VERIFY RECEIVED KIT |
-| H06 | **CONN-100307** | Toyota coil 2.3 mm sealed application; OEM manufacturer TBD | **CONN-11856** | **CONN-00119** | 20–16 AWG | SUPPLIER-CROSS-REFERENCE; VERIFY RECEIVED KIT |
-| H07 | **CONN-100647** | Toyota/Mazda 2.3 mm sealed TPS/DBW application; OEM manufacturer TBD | **CONN-11856** | **CONN-00145** | 20–16 AWG | SUPPLIER-CROSS-REFERENCE; VERIFY RECEIVED KIT |
-| H08 | **CONN-100959** | Older Toyota 090-I, supplier-identified | **CONN-11656** | **CONN-00145** | terminal 22–16 AWG; seal listed 20–16 AWG | SUPPLIER-CROSS-REFERENCE; VERIFY RECEIVED KIT |
-| H09 | **CONN-100300** | Sumitomo TS; supplier gives Sumitomo **6189-0443 / 6189-0442** | **CONN-11856** | **CONN-00145** | 20–16 AWG | SUPPLIER-CROSS-REFERENCE; VERIFY RECEIVED KIT |
+| H01 | **CONN-100510** | Sumitomo TS, supplier-identified | **CONN-11856** | **CONN-00145** | 20–16 AWG | KIT RECEIVED; VERIFY RECEIVED HARDWARE |
+| H02 | **CONN-100927** | Japanese VVT housing; exact OEM manufacturer TBD | **CONN-11856** | **CONN-00145** | 20–16 AWG | KIT RECEIVED; VERIFY RECEIVED HARDWARE |
+| H03 | **CONN-100724** | Toyota 090/TS-type pressure-switch application; OEM manufacturer TBD | **CONN-11856** | **CONN-00145** | terminal 20–16 AWG; connector listing 22–16 AWG | KIT RECEIVED; VERIFY RECEIVED HARDWARE |
+| H04 | **CONN-100317** | 1.8 mm SSC / Econoseal-type application; OEM manufacturer TBD | **CONN-00127** | **CONN-00119** | 20–16 AWG | KIT RECEIVED; VERIFY RECEIVED HARDWARE |
+| H05 | **CONN-11855** | Toyota-style 2.3 mm sealed application; OEM manufacturer TBD | **CONN-11856** | **CONN-00119** | 20–16 AWG | KIT RECEIVED; VERIFY RECEIVED HARDWARE |
+| H06 | **CONN-100307** | Toyota coil 2.3 mm sealed application; OEM manufacturer TBD | **CONN-11856** | **CONN-00119** | 20–16 AWG | KIT RECEIVED; VERIFY RECEIVED HARDWARE |
+| H07 | **CONN-100647** | Toyota/Mazda 2.3 mm sealed TPS/DBW application; OEM manufacturer TBD | **CONN-11856** | **CONN-00145** | 20–16 AWG | KIT RECEIVED; VERIFY RECEIVED HARDWARE |
+| H08 | **CONN-100959** | Older Toyota 090-I, supplier-identified | **CONN-11656** | **CONN-00145** | terminal 22–16 AWG; seal listed 20–16 AWG | KIT RECEIVED; VERIFY RECEIVED HARDWARE |
+| H09 | **CONN-100300** | Sumitomo TS; supplier gives Sumitomo **6189-0443 / 6189-0442** | **CONN-11856** | **CONN-00145** | 20–16 AWG | KIT RECEIVED; VERIFY RECEIVED HARDWARE |
 
 ### Emerging commonality — do not bulk-buy yet
 
