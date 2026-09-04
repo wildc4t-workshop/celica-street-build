@@ -4,7 +4,7 @@ repository: wildc4t-workshop/celica-street-build
 repository_type: engineering-project
 status: active
 phase: selected
-checkpoint: 2026-09-01
+checkpoint: 2026-09-04
 
 task_prefix: STREET-
 decision_prefix: DEC-STREET-
@@ -19,6 +19,8 @@ current_direction:
   - Keep the current car intact and usable while the replacement drivetrain package is developed offline.
   - Use the spare Celica subframe as the drivetrain integration buck rather than trying to duplicate every chassis-side supporting system.
   - Preserve a pre-EMU electrical/body-function baseline before removing the known-good PowerFC architecture.
+  - Bench-characterize the EMU Black and verify the actual 2ZZ crank/cam trigger strategy before real-car EMU installation.
+  - Treat the imported 2ZZ V2-to-V3 project as reference/startup material with explicit commissioning checks, not as a validated Celica calibration.
   - Validate the return-style fuel system and EMU Black first on the current engine using the MWR adapter.
   - Treat the MWR adapter as an interim commissioning tool, not the intended final harness architecture.
   - Build the final configuration around the sleeved/forged 2ZZ, E153, DBW, flex fuel, EMU Black, and a purpose-built custom harness.
@@ -35,6 +37,7 @@ proven_or_owned_baseline:
   - E153 factory-LSD transmission with MWR clutch/flywheel, mounts/adapters, and axles.
   - Complete spare Celica subframe with power-steering rack.
   - ECUMaster EMU Black, ECUMaster printed flying-lead harness, and MWR EMU adapter.
+  - EMU Black legacy hardware revision F / CPU revision G is bench-powered, communicating, unlocked, and running V3.061.
   - MWR return-style fuel hardware with MWR rail, AEM FPR, and AEM fuel pump.
   - 2003-2005 Celica DBW pedal and Corolla 2ZZ intake runners.
   - Moroso upgraded oil pan.
@@ -45,6 +48,7 @@ proven_or_owned_baseline:
 
 received_verify:
   - Ballenger connector kits are stored together in a large ziplock bag on top of the built engine; physical fit and terminal ecosystem verification remain pending.
+  - 2ZZ reference project imported from V2 definition 2.174 into V3.061; migration/commissioning checks are preserved in EMU_COMMISSIONING.md.
 
 uncertain_verify:
   - Built-engine compression ratio is remembered as approximately 9.5:1.
@@ -66,3 +70,4 @@ dashboard:
   durable_state: PROJECT.md
   agent_instructions: AGENTS.md
   harness_connector_register: HARNESS_CONNECTORS.md
+  emu_commissioning_record: EMU_COMMISSIONING.md
