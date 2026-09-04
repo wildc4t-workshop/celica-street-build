@@ -1,0 +1,143 @@
+Definition file 2.174 loaded sucesfull. 
+Project loaded sucesfull. 
+
+Sensors and inputs
+
+Analog inputs pullups imported
+TPS and PPS configuration imported. Please setup check inputs and check function!!!
+Table CLT imported
+Table IAT imported
+Copy oxygen sensors settings
+Copy MAP and BARO sensors settings
+Copy Oil pressure sensors settings
+Steering wheel sensor offset
+Fuel level sensor and calibration
+Table Fuel level cal. table imported
+Calculated gear detection
+Gear ratios copied
+WARNING: Number of gears set to 7. Please check.
+Copy VSS sensor input configuration
+
+Engine start
+Copy engine start parameters
+WARNING: In V3, there is no option to batch all injectors during cranking.
+Table Prime pulse imported
+Table Start delay imported
+Table Fuel TPS correction imported
+WARNING: Adjust Cranking airflow table, to set throttle opening during cranking.
+WARNING: Cranking tables in V3 are based on the VE table instead of injector time (ms). Please refer to the help documentation and adjust the cranking fuel tables accordingly.
+Table Warmup 1 imported
+Table Warmup 2 imported
+Table ASE table 1 imported
+Table ASE table 2 imported
+WARNING: ASE strategy has changed. Check the ASE 1 and ASE 2 tables.
+
+Fueling
+Copy general options
+Copy fuel cut options
+WARNING: Overrun is a separate strategy in V3. The strategy was set up based on V2 parameters but my work different. Please verify.
+WARNING: Acceleration enrichment strategy has changed and must be set up manually!.
+Table Baro corr. imported
+Table IAT custom corr. imported
+Table Fuel temp corr. imported
+Copy Charge temp. table
+Table mapBinsAirCharge imported.
+Table chargeTempTbl imported.
+Table tpsBinsAirCharge imported.
+Fuel trims copied
+Table Injectors cal. imported
+Table mapBins8B imported.
+Table tpsBins8B imported.
+Table rpmBins8B imported.
+Table injectionAngle imported.
+WARNING: The outputs assignement assumes that injector for Cyl#1 is connected to Inj output #1, injector for Cyl#2 is connected to Inj output #1 and so on. If your assignement is diferent please correct the injectors phase configuration!
+Table tpsBinsL8 imported.
+Table mapBinsL8 imported.
+Table rpmBins10 imported.
+Table lambdaTable imported.
+Table lambdaTable2 imported.
+Table mapBins imported.
+Table rpmBins imported.
+Table rpmBins imported.
+Table tpsBins imported.
+Table veTable imported.
+Table veTable2 imported.
+Table tpsBins8 imported.
+Table mapBins8 imported.
+Table rpmBins8 imported.
+
+Ignition
+
+Trigger settings and ignition 
+Num cylinders: 4
+Spark distribution: coils
+Coils type: Coils with built-in amplifier
+Firing order: 1-3-4-2
+WARNING: Please check the firing order! If the above firing order is wrong, you need to manually configure firning order and ignition outputs.
+WARNING: The outputs assignement assumes that coil from Cyl#1 is connected to ing output #1, coil#2 to ignition output #2 and so on. If your assignement is diferent or you use double outputs coils please correct the ignition outputs assignement table!
+CAM#1 parameters imported (sensor and trigger settings)
+CAM#2 parameters imported (sensor and trigger settings)
+
+Table vbattVBins imported.
+Table dwellTime imported.
+Table Dwell RPM correction imported
+Table Dwell MAP correction imported
+Table ignTable imported.
+Table ignTable2 imported.
+Table tpsBins imported.
+Table rpmBins8 imported.
+Table secTriggerSensitivity imported.
+Table cam2Sensitivity imported.
+Soft rev limiter copied
+
+Knock sensors
+Sensor parameters copied
+Sampling settings copied
+WARNING: Please verify sensor to cylinder assignment!
+Table Engine noise imported
+
+Idle
+Import idle settings
+Table idleRPM imported.
+Afterstart targer increase table created
+Table idleDCREF imported.
+Table cltBins8 imported.
+Table idleTargetBins imported.
+Table idleDCVECorrection imported.
+Table idleDCVERPM imported.
+Table idleDCBin imported.
+Table idlePWMBattCorr imported.
+Table idleDSGTorqueLosesBin imported.
+Table idleDSGTorqueCorr imported.
+Table Idle armed airflow imported
+DBW min / max calculated 
+WARNING: Idle ignition settings are set to V3 default. Set up PID and review target ignition angle tables.
+WARNING: Set up Idle airflow PID.
+
+DBW
+Table DBW Characterisic 1 imported
+Table DBW Characterisic 2 imported
+WARNING: Run DBW wizard to finish throttle calibration.
+
+Outputs
+PWM 1 function: PWM output
+PWM 2 function: PWM output
+Table PWM 1 table imported
+Table pwmTable2 imported.
+Table pwm2XAxis imported.
+Table pwm2YAxis imported.
+Coolant fan settings
+Fuel pump settings
+Main relay settings
+
+VVTi
+Table Cam1 angle #1  imported
+Table Cam1 angle #2  imported
+Table Cam2 angle #1  imported
+Table Cam2 angle #2  imported
+VVTi CAM 1 parameters
+WARNING: Please check VVTi CAM1 offset .
+Vtec parameters imported
+
+Sport functions
+Shift light imported
