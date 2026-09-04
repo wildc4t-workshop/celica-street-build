@@ -42,6 +42,7 @@ The exact turbo, hot-side, intake, charge-cooling, aftermarket sensor hardware, 
 - [`AGENTS.md`](AGENTS.md) — collaboration and engineering-record rules.
 - [`PRE_EMU_BASELINE.md`](PRE_EMU_BASELINE.md) — minimum evidence to capture before removing the known-good PowerFC architecture.
 - [`HARNESS_CONNECTORS.md`](HARNESS_CONNECTORS.md) — controlled 2ZZ/DBW connector identification, physical-verification register, and production-harness BOM starting point.
+- [`EMU_COMMISSIONING.md`](EMU_COMMISSIONING.md) — EMU hardware/software baseline, 2ZZ base-map migration record, commissioning gates, and bench/vehicle validation record.
 
 Related repositories:
 
