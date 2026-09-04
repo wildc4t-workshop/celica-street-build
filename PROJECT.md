@@ -2,7 +2,7 @@
 
 **Vehicle:** 2000 US-spec Toyota Celica GT-S  
 **Role:** finished street car and useful engineering exercise platform  
-**Checkpoint:** 2026-08-31
+**Checkpoint:** 2026-09-04
 
 ## 1. Objective
 
@@ -113,6 +113,8 @@ The following are current commitments:
 - EMU Black installed through the MWR adapter.
 - Current engine and cable-throttle arrangement retained.
 - Use the stage to validate ECU behavior, fuel delivery, tuning, and tuner trust.
+
+The EMU Black has now been successfully bench-powered, connected, and migrated to **V3.061**. A 2ZZ reference calibration was imported from a V2 project; the resulting V2 -> V3 migration warnings are being treated as a controlled verification register rather than evidence that the imported map is ready to run the car. Bench trigger/synchronization characterization is now the next controls step before real-car installation. See [`EMU_COMMISSIONING.md`](EMU_COMMISSIONING.md).
 
 ### Final
 
