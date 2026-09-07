@@ -30,6 +30,10 @@ current_direction:
   - Use Bosch LSU 4.9 0 258 017 025 / 17025 directly through the EMU Black native wideband controller; retire the external AEM UEGO controller as the ECU lambda source.
   - Measure main-gallery oil pressure from the factory 2ZZ pressure port through a short remote -3AN line; move turbo oil feed and low-pressure warning switch to an MWR MWR-901465 sandwich plate.
   - Treat the MWR adapter as an interim commissioning/integration tool, not the intended final harness architecture.
+  - In the final custom-harness build, delete the OEM MAF assembly, replace the long internal-MAP hose with a dedicated external MAP sensor at the manifold/throttle interface, and add a dedicated post-intercooler IAT sensor representative of actual charge temperature.
+  - If an ETB adapter is required, consider integrating the external MAP boss into that adapter; a compact Honda-style MAP arrangement is the packaging inspiration, but exact sensor hardware remains open.
+  - Verify whether the Baseline Plus MWR/OEM arrangement is using the IAT element integrated into the factory MAF before relying on that signal during commissioning.
+  - Use CAN expansion for secondary/development instrumentation such as EMAP, multi-channel EGT, oil temperature, coolant pressure, and similar channels after the native analog budget is consumed.
   - Build the final configuration around the sleeved/forged 2ZZ, E153, DBW, flex fuel, EMU Black, and a purpose-built custom harness.
   - Develop the custom-harness BOM through factory-document identification followed by physical connector and terminal verification before production quantities are purchased.
   - Use the 2000 Celica EWD as the vehicle-year electrical baseline and use 2005 documentation deliberately for selected late-2ZZ hardware such as DBW and the later knock-sensor architecture.
@@ -69,12 +73,14 @@ uncertain_verify:
   - Verify physical MWR extension/PCB routing for HB1A/HB1B/AUX6 before building the DBW bypass harness.
   - Verify fuel-feed hose size before ordering Radium housing end adapters.
   - Verify oil-pressure remote sender bracket location and hose length before final plumbing purchase.
+  - Verify the Baseline Plus IAT signal source/path; current working assumption is the IAT element integrated into the factory MAF assembly.
 
 open_architecture:
   - final turbo and hot-side architecture
   - final DBW throttle body and intake/plenum architecture after the OEM late-Celica ETB POC
   - final charge-cooling architecture
   - exact custom-harness topology and final EMU I/O allocation
+  - exact external MAP sensor and dedicated IAT/TMAP hardware for the final harness
   - final CAN expansion and broader instrumentation strategy beyond Baseline Plus
   - final protection thresholds and integrated display strategy
   - detailed chassis-side transfer list for swap day
@@ -86,3 +92,4 @@ dashboard:
   harness_connector_register: HARNESS_CONNECTORS.md
   emu_commissioning_record: EMU_COMMISSIONING.md
   baseline_plus_record: BASELINE_PLUS.md
+  final_sensor_topology: FINAL_SENSOR_TOPOLOGY.md
