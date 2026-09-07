@@ -4,7 +4,7 @@ repository: wildc4t-workshop/celica-street-build
 repository_type: engineering-project
 status: active
 phase: selected
-checkpoint: 2026-09-04
+checkpoint: 2026-09-07
 
 task_prefix: STREET-
 decision_prefix: DEC-STREET-
@@ -18,11 +18,14 @@ objective: >-
 current_direction:
   - Keep the current car intact and usable while the replacement drivetrain package is developed offline.
   - Use the spare Celica subframe as the drivetrain integration buck rather than trying to duplicate every chassis-side supporting system.
-  - Preserve a pre-EMU electrical/body-function baseline before removing the known-good PowerFC architecture.
+  - Preserve a pre-EMU electrical/body-function baseline and archive the current PowerFC calibration before removing the known-good PowerFC architecture.
   - Bench-characterize the EMU Black and verify the actual 2ZZ crank/cam trigger strategy before real-car EMU installation.
-  - Treat the imported 2ZZ V2-to-V3 project as reference/startup material with explicit commissioning checks, not as a validated Celica calibration.
-  - Validate the return-style fuel system and EMU Black first on the current engine using the MWR adapter.
-  - Treat the MWR adapter as an interim commissioning tool, not the intended final harness architecture.
+  - Treat the MWR 2023 supercharged-2ZZ Celica base map as the interim MWR-adapter I/O/integration reference, not as a ready-to-run tune.
+  - Treat the Lotus 2ZZ DBW map as a DBW implementation reference, not as Celica wiring authority.
+  - Validate the return-style fuel system, EMU Black and DBW together on the current engine using the MWR adapter as an integration bridge.
+  - Retain the MWR PCB for body/cluster integration while bypassing selected EMU channels through a dedicated DBW sub-harness at the short EMU-to-MWR extension harness.
+  - If late-Celica OEM ETB fitment and bench validation succeed, delete the cable throttle and IAC in Baseline Better; move VVT from H-Bridge 1A to freed AUX6 so H-Bridge 1A/1B can drive the ETB while VVL remains on H-Bridge 2A.
+  - Treat the MWR adapter as an interim commissioning/integration tool, not the intended final harness architecture.
   - Build the final configuration around the sleeved/forged 2ZZ, E153, DBW, flex fuel, EMU Black, and a purpose-built custom harness.
   - Develop the custom-harness BOM through factory-document identification followed by physical connector and terminal verification before production quantities are purchased.
   - Use the 2000 Celica EWD as the vehicle-year electrical baseline and use 2005 documentation deliberately for selected late-2ZZ hardware such as DBW and the later knock-sensor architecture.
@@ -38,8 +41,11 @@ proven_or_owned_baseline:
   - Complete spare Celica subframe with power-steering rack.
   - ECUMaster EMU Black, ECUMaster printed flying-lead harness, and MWR EMU adapter.
   - EMU Black legacy hardware revision F / CPU revision G is bench-powered, communicating, unlocked, and running V3.061.
+  - MWR 2023 supercharged 2ZZ Celica base map recovered from email and converted to V3 for inspection.
+  - Lotus 2ZZ DBW reference map available for comparison.
   - MWR return-style fuel hardware with MWR rail, AEM FPR, and AEM fuel pump.
   - 2003-2005 Celica DBW pedal and Corolla 2ZZ intake runners.
+  - Used 2003-2005 Celica GT-S 2ZZ OEM ETB ordered 2026-09-07 for 2000-manifold fitment and EMU DBW POC.
   - Moroso upgraded oil pan.
   - Mishimoto radiator already installed on the current car.
   - Current TurboKits.com T28-flanged architecture remains a known viable fallback.
@@ -48,19 +54,21 @@ proven_or_owned_baseline:
 
 received_verify:
   - Ballenger connector kits are stored together in a large ziplock bag on top of the built engine; physical fit and terminal ecosystem verification remain pending.
-  - 2ZZ reference project imported from V2 definition 2.174 into V3.061; migration/commissioning checks are preserved in EMU_COMMISSIONING.md.
+  - MWR V2-to-V3 conversion log preserves imported/warning state for the recovered Celica base map.
+  - OEM late-Celica ETB fitment on the 2000 intake manifold remains pending until the ordered part arrives.
 
 uncertain_verify:
   - Built-engine compression ratio is remembered as approximately 9.5:1.
   - Engine valves are believed to be upgraded stainless valves.
   - Upgraded balancer is believed to be ATI.
   - Check and record built-engine valve clearance before final installation/commissioning.
+  - Verify physical MWR extension/PCB routing for HB1A/HB1B/AUX6 before building the DBW bypass harness.
 
 open_architecture:
   - final turbo and hot-side architecture
-  - final DBW throttle body and intake/plenum architecture
+  - final DBW throttle body and intake/plenum architecture after the OEM late-Celica ETB POC
   - final charge-cooling architecture
-  - exact custom-harness topology and EMU I/O allocation
+  - exact custom-harness topology and final EMU I/O allocation
   - final aftermarket sensor hardware ranges and CAN expansion
   - final protection logic and integrated display strategy
   - detailed chassis-side transfer list for swap day
