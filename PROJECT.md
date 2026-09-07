@@ -2,7 +2,7 @@
 
 **Vehicle:** 2000 US-spec Toyota Celica GT-S  
 **Role:** finished street car and useful engineering exercise platform  
-**Checkpoint:** 2026-09-04
+**Checkpoint:** 2026-09-07
 
 ## 1. Objective
 
@@ -51,17 +51,21 @@ The result is a sorted current-powertrain street car: get in, drive, have fun.
 
 ### Stage B — Baseline Better / Independent Validation
 
-Before the major drivetrain swap, upgrade systems that can be validated independently on the running engine with little downtime:
+Before the major drivetrain swap, upgrade systems that can be validated independently on the running engine with controlled downtime:
 
-1. Install the return-style fuel system, pump, rail, and FPR.
-2. Install EMU Black through the MWR adapter while retaining the current engine and simple cable-throttle configuration.
-3. Have a tuner commission and tune the ECU.
-4. Drive the car and validate the fuel system, ECU behavior, diagnostics, and tuner relationship.
-5. Upgrade to appropriate tires before exploiting substantially more power.
+1. Preserve the current PowerFC electrical/body-function baseline and archive as much of the running PowerFC calibration as practical.
+2. Install the return-style fuel system, pump, rail, and FPR.
+3. Install EMU Black through the MWR adapter.
+4. Convert the current engine to DBW using a late-2ZZ OEM-style ETB/pedal solution if fitment and bench validation succeed.
+5. Retain the MWR PCB for Celica/body integration, but bypass selected EMU pins through a dedicated DBW sub-harness rather than modifying the PCB.
+6. Delete the cable-throttle/IAC hardware after DBW is proven; move VVT from H-Bridge 1A to the freed AUX6 path so H-Bridge 1 can control the ETB motor while VVL remains on H-Bridge 2A.
+7. Have a tuner commission and tune the combined fuel-system / EMU / DBW package.
+8. Drive the car and validate fuel delivery, ECU behavior, DBW, idle/VVT/VVL behavior, diagnostics, body/cluster integration, and the tuner relationship.
+9. Upgrade to appropriate tires before exploiting substantially more power.
 
-This stage deliberately reduces the number of unknowns in the final build. If the current engine fails during tuning or validation, the already-prepared replacement drivetrain is the contingency rather than a new project starting from zero.
+This stage deliberately reduces the number of unknowns in the final build while also removing the cable-throttle/IAC/cruise packaging burden from the passenger-side engine-bay corridor. If the current engine fails during tuning or validation, the already-prepared replacement drivetrain is the contingency rather than a new project starting from zero.
 
-The MWR adapter is therefore a **commissioning tool**, not necessarily part of the finished architecture.
+The MWR adapter is therefore a **commissioning and integration bridge**, not necessarily part of the finished harness architecture.
 
 ### Stage C — Replacement Drivetrain Build
 
@@ -96,7 +100,7 @@ The following are current commitments:
 - 2ZZ remains the engine architecture.
 - Turbocharged street build remains the direction.
 - EMU Black replaces the Apexi PowerFC.
-- DBW is required in the final Street Build.
+- DBW is required in the final Street Build and is now intentionally being pulled forward into Baseline Better if the MWR-adapter proof succeeds.
 - Flex-fuel capability is required in the final Street Build.
 - Full custom engine/control harness is the intended final electrical architecture.
 - A/C must remain functional.
@@ -108,19 +112,29 @@ The following are current commitments:
 
 ## 5. Electrical / Controls Strategy
 
-### Interim
+### Interim / Baseline Better
 
 - EMU Black installed through the MWR adapter.
-- Current engine and cable-throttle arrangement retained.
-- Use the stage to validate ECU behavior, fuel delivery, tuning, and tuner trust.
+- MWR PCB retained as the Celica/body integration layer.
+- Dedicated DBW bypass/sub-harness added at the short EMU-to-MWR extension harness.
+- H-Bridge 1A/1B reserved for the ETB motor after moving VVT control to AUX6.
+- VVL remains on H-Bridge 2A unless bench/vehicle evidence requires a change.
+- Redundant throttle and pedal position sensing should be used where the selected hardware supports it.
+- Current cable throttle and IAC are deleted only after DBW fitment and bench validation succeed.
 
-The EMU Black has now been successfully bench-powered, connected, and migrated to **V3.061**. A 2ZZ reference calibration was imported from a V2 project; the resulting V2 -> V3 migration warnings are being treated as a controlled verification register rather than evidence that the imported map is ready to run the car. Bench trigger/synchronization characterization is now the next controls step before real-car installation. See [`EMU_COMMISSIONING.md`](EMU_COMMISSIONING.md).
+The EMU Black has been successfully bench-powered, connected, and migrated to **V3.061**. Two distinct reference calibrations are now available and must not be conflated:
+
+1. **MWR 2023 supercharged 2ZZ Celica base map** — cable-throttle, MWR-adapter-specific reference for vehicle I/O ownership and integration.
+2. **Lotus 2ZZ DBW reference map** — DBW implementation reference showing H-Bridge 1 throttle control and auxiliary-output VVT/VVL strategy.
+
+Neither is considered a validated calibration for this car. The intended interim configuration is a deliberate hybrid based on actual MWR routing, late-2ZZ DBW hardware, bench validation, and tuner commissioning. See [`EMU_COMMISSIONING.md`](EMU_COMMISSIONING.md).
 
 ### Final
 
 - Remove the temporary adapter architecture.
 - Wire EMU Black directly through a purpose-built custom harness.
-- Add DBW, flex fuel, and final instrumentation/protection functions.
+- Retain the DBW architecture already proven during Baseline Better where practical.
+- Add flex fuel and final instrumentation/protection functions.
 - Use the 2000 Celica EWD as the vehicle-year baseline and the 2005 Celica EWD deliberately where late 2ZZ hardware is selected.
 - Define actual EMU I/O allocation before buying the broad final sensor package.
 - Let the final sensor/protection strategy follow the real I/O map, available CAN expansion, and tuner input.
@@ -202,7 +216,7 @@ Owned hardware:
 - AEM fuel-pressure regulator;
 - AEM fuel pump.
 
-The fuel system is deliberately suitable for early installation on the current engine so it can be validated before the final drivetrain swap.
+The fuel system is deliberately suitable for early installation on the current engine so it can be validated during the combined Baseline Better EMU/DBW commissioning stage before the final drivetrain swap.
 
 ## 8. Turbo / Hot-Side Architecture
 
@@ -230,9 +244,15 @@ A BorgWarner SX-E V-band turbo owned elsewhere is currently intended for the Civ
 
 ## 9. Intake / Charge Cooling
 
-Open architecture:
+Current DBW direction:
 
-- final DBW throttle body;
+- A used 2003–2005 Celica GT-S 2ZZ OEM ETB has been ordered for physical fitment testing on the 2000 intake manifold.
+- The existing 2003–2005 Celica DBW pedal remains the preferred POC pedal.
+- If the OEM late-Celica ETB fits the 2000 manifold and validates electrically with EMU Black, it becomes the preferred Baseline Better throttle solution because it minimizes fabrication and supports direct late-2ZZ connector documentation.
+- Final throttle body/plenum architecture remains open; proving the OEM ETB now does not prevent a later Bosch/other ETB choice if the final build benefits from it.
+
+Other open architecture:
+
 - OEM/off-the-shelf versus custom intake/plenum;
 - final charge-cooling architecture;
 - whether the existing TurboKits.com intercooler system remains or an A2W solution earns its complexity.
@@ -288,9 +308,9 @@ Do not force these decisions before the work actually requires them:
 
 - final turbo and hot-side architecture;
 - whether the modular sidewinder earns selection over the known T28 path;
-- final intake/plenum/throttle-body architecture;
+- final intake/plenum/throttle-body architecture after the OEM late-Celica ETB POC;
 - final intercooling architecture;
-- exact custom-harness topology and EMU I/O allocation;
+- exact custom-harness topology and final EMU I/O allocation;
 - final aftermarket sensor hardware/ranges, CAN expansion, protection logic, and display strategy;
 - detailed chassis-side transfer list for final swap day.
 
