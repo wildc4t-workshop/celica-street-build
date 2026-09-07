@@ -1,18 +1,16 @@
 # EMU Black Commissioning and 2ZZ Calibration Record
 
-## 1. Purpose and scope
+## 1. Purpose
 
-This document is the durable controls/ECU working record for the Celica Street Build. It preserves:
+This document owns **ECU commissioning evidence and gates**. It does not own the Baseline Plus hardware BOM or final sensor architecture.
 
-- the actual EMU Black hardware/software baseline;
-- the imported 2ZZ reference calibration and V2 -> V3 migration debt;
-- bench trigger/synchronization validation;
-- settings that imported successfully but are not yet validated for this car;
-- commissioning gates that must be closed before the relevant engine functions are enabled.
+Use:
 
-The imported 2ZZ project is a **reference/start point, not a validated Celica calibration**. Successful import means that data transferred into V3; it does not prove that the resulting setting is correct for the 2000 GT-S, the interim MWR adapter configuration, or the final custom-harness/built-engine configuration.
+- [`BASELINE_PLUS.md`](BASELINE_PLUS.md) for the interim hardware/I/O/sub-harness architecture;
+- [`PRE_EMU_BASELINE.md`](PRE_EMU_BASELINE.md) for PowerFC/body-function capture;
+- [`FINAL_SENSOR_TOPOLOGY.md`](FINAL_SENSOR_TOPOLOGY.md) for final MAP/IAT/CAN direction.
 
-Original migration evidence is preserved at [`references/emu/2zz_v2-to-v3_import_log.txt`](references/emu/2zz_v2-to-v3_import_log.txt).
+Reference calibrations are starting material only. Imported settings are not validated merely because they load successfully.
 
 ## 2. ECU hardware/software baseline
 
@@ -21,185 +19,182 @@ Status: **BENCH-TESTED** as of 2026-09-03.
 | Item | Established state |
 |---|---|
 | ECU | ECUMaster EMU Black |
-| Hardware generation | Legacy Micro-USB, black 39-pin + gray 24-pin connector architecture |
+| Hardware generation | Legacy Micro-USB; black 39-pin + gray 24-pin connectors |
 | Hardware revision | F |
 | CPU revision | G |
 | Bootloader | 2.004 |
-| Firmware | 3.061 |
-| Client | 3.061 |
+| Firmware / client | 3.061 |
 | Lock state | Unlocked |
-| Bench power | Successfully powered from current-limited 13.5 V bench supply |
-| Communications | Successfully connected to EMU Black client over Micro-USB |
-| Interim vehicle interface | MWR adapter/jumper harness available |
+| Bench power | Stable on current-limited 13.5 V supply |
+| USB communication | Verified |
+| Interim vehicle interface | MWR adapter + removable jumper harness |
 
-Do not assume newer USB-C-generation pinout documentation applies to this unit without checking the legacy hardware documentation.
+Do not apply newer USB-C-generation pinouts to this unit without verification.
 
-## 3. 2ZZ reference-project import
+## 3. Reference calibrations — keep their authority separate
 
-A 2ZZ DBW reference project using definition file **2.174** was imported into EMU Black V3.061. The importer reported that both the definition file and project loaded successfully.
+Two useful 2ZZ references are available and must not be conflated:
 
-Useful imported reference information includes:
+### MWR 2023 supercharged 2ZZ Celica map
 
-- 4 cylinders;
-- coil-on-plug ignition with built-in amplifiers;
-- firing order imported as **1-3-4-2**;
-- CAM #1 and CAM #2 sensor/trigger settings imported;
-- VVT/VVL-related settings imported;
-- DBW characteristic tables imported.
+**Authority:** MWR/Celica adapter I/O and vehicle-integration reference.
 
-None of those imported values are considered verified solely because they imported.
+Known useful assignments from the recovered map include:
 
-## 4. V2 -> V3 migration warning / verification register
+- Injector 1–4 -> cylinders 1–4;
+- Injector 5 -> main relay;
+- Injector 6 -> unused in the recovered map;
+- AUX1 -> fuel pump;
+- AUX2 -> coolant fan;
+- AUX3 -> A/C clutch;
+- AUX4 -> tach;
+- AUX5 -> A/C fan;
+- AUX6 -> cable-throttle IAC;
+- H-Bridge 1A -> VVT;
+- H-Bridge 2A -> VVL;
+- CAN 500 kbps with standard EMU stream enabled at base ID `0x600`.
 
-| Area | Import warning / migration concern | Required action | Commissioning gate | Status |
-|---|---|---|---|---|
-| TPS / PPS | TPS and PPS configuration imported; importer requires input/check-function setup | Verify channel assignment, ranges, polarity/plausibility and calibration against the actual pedal/throttle hardware | Before DBW enable | OPEN |
-| Gear detection | Import set number of gears to 7 | Set correct gear count and verify ratios / VSS strategy | Before road validation | OPEN |
-| Cranking injection | V3 no longer offers the same batch-all-injectors cranking option | Review V3 cranking strategy rather than reproducing V2 behavior literally | Before first fire | OPEN |
-| Cranking airflow | Cranking-airflow table requires adjustment for throttle opening during crank | Configure once actual throttle/DBW strategy is known | Before first fire | OPEN |
-| Cranking fueling | V3 cranking tables are VE-based rather than direct injector-time tables | Rebuild/review cranking fuel in the V3 framework | Before first fire | OPEN |
-| ASE | After-start enrichment strategy changed | Review and tune ASE 1 / ASE 2 | Startup tuning | OPEN |
-| Overrun | Overrun is a separate V3 strategy and imported behavior may differ | Review fuel-cut / decel / overrun behavior | Before street validation | OPEN |
-| Acceleration enrichment | Strategy changed and importer states it must be set up manually | Configure and tune in V3 | Before drivability validation | OPEN |
-| Injector assignment | Import assumes cylinder-to-injector output mapping | Verify physical injector outputs, cylinder numbering, firing order and injection phasing against the actual harness | **Before fuel outputs are enabled** | OPEN |
-| Firing order | Imported as 1-3-4-2 but explicitly flagged for verification | Verify against 2ZZ documentation and actual output assignment | Before spark/fuel enable | OPEN |
-| Ignition assignment | Import assumes cylinder-to-ignition-output mapping | Verify physical coil outputs against the actual harness | **Before ignition outputs are enabled** | OPEN |
-| Knock | Importer requires sensor-to-cylinder assignment verification | Configure actual knock sensor strategy and validate cylinder relationship before relying on knock protection | Before knock protection is trusted | OPEN |
-| Idle ignition | V3 default idle-ignition settings were substituted | Configure idle ignition PID / targets | Idle commissioning | OPEN |
-| Idle airflow | Idle-airflow PID requires setup | Configure and tune | Idle commissioning | OPEN |
-| DBW | DBW characteristics imported but wizard is still required | Run DBW wizard; verify APP/TPS redundancy, direction, limits and failsafe behavior | **Before DBW is enabled** | OPEN |
-| VVT | Importer requires VVTi CAM1 offset verification | Establish true cam phase/reference and verify commanded vs measured angle | Before closed-loop VVT | OPEN |
+This map is **not** a ready-to-run tune for the user's current turbo engine.
 
-## 5. Imported does not mean validated
+### Lotus 2ZZ DBW reference map
 
-The following areas imported or copied without a migration warning but still require hardware-appropriate review before the relevant commissioning stage:
+**Authority:** DBW implementation reference, not Celica wiring authority.
 
-| Area | Verification required |
-|---|---|
-| CLT | Confirm selected sensor and resistance/temperature calibration |
-| IAT | Confirm selected sensor and calibration |
-| Oxygen / lambda | Confirm sensor/controller architecture, calibration and expected lambda source |
-| MAP / BARO | Confirm pressure source, range, calibration and whether internal/external reference is used |
-| Oil pressure | Confirm whether the imported configuration corresponds to the actual sensor/interface |
-| Fuel level / steering / gear ratios / VSS | Verify only if those functions are retained or used |
-| Injector calibration | Replace/confirm for actual injector part number, fuel pressure and fuel type |
-| Dwell | Verify against actual coil hardware |
-| Ignition tables | Treat as reference only; final timing requires real engine/tuner validation |
-| VE / fueling tables | Treat as reference/startup material only |
-| Lambda targets | Review for the actual turbo/fuel/boost operating envelope |
-| Coolant fan settings | Verify fan relay ownership, temperature thresholds and vehicle wiring |
-| Fuel-pump settings | Verify relay/output ownership and prime/run behavior |
-| Main-relay settings | Verify against interim and final power architecture |
-| VVT tables | Verify against actual 2ZZ cam response and final engine configuration |
-| VVL / "VTEC" strategy | Verify output ownership, thresholds and oil-pressure/lift strategy |
+Useful concepts:
+
+- H-Bridge 1 used for DBW motor control;
+- auxiliary outputs used for VVT/VVL;
+- electronic pedal and throttle-position functions configured in EMU software.
+
+A V2 -> V3 migration log is preserved at [`references/emu/2zz_v2-to-v3_import_log.txt`](references/emu/2zz_v2-to-v3_import_log.txt).
+
+## 4. V2 -> V3 migration / validation debt
+
+| Area | Required validation | Gate |
+|---|---|---|
+| TPS / PPS | Assign actual channels; calibrate main/check tracks; verify plausibility and polarity | Before DBW enable |
+| Gear detection | Correct imported gear count / ratios if used | Before road validation |
+| Cranking fuel | Rebuild/review in V3 VE framework | Before first fire |
+| Cranking airflow | Configure for actual DBW throttle behavior | Before first fire |
+| ASE | Review V3 after-start enrichment | Startup tuning |
+| Overrun | Review V3 decel/fuel-cut behavior | Before street validation |
+| Accel enrichment | Configure manually in V3 | Before drivability validation |
+| Injector assignment | Verify output-to-cylinder mapping and actual injector calibration | Before fuel enable |
+| Firing order | Verify 1-3-4-2 against hardware assignment | Before spark/fuel enable |
+| Ignition assignment | Verify coil output-to-cylinder mapping and dwell | Before ignition enable |
+| Knock | Verify sensor strategy and cylinder relationship | Before relying on knock protection |
+| Idle ignition / airflow | Configure for DBW idle control | Idle commissioning |
+| DBW | Run wizard; verify direction, limits, redundancy, failsafe | Before DBW enable |
+| VVT | Establish true cam reference/offset and commanded-vs-measured behavior | Before closed-loop VVT |
+
+## 5. Baseline Plus selected sensor/control architecture
+
+The hardware choice itself is owned by `BASELINE_PLUS.md`; this table records what commissioning must validate.
+
+| Function | Selected Baseline Plus hardware / path | Commissioning requirement |
+|---|---|---|
+| Lambda | Bosch LSU 4.9 direct to native EMU WBO | Heater/controller status, plausible free-air/running lambda, fault behavior |
+| Fuel pressure | Link MIPS 101-0325 on B35 / AIN5 | Confirm 0.5–4.5 V calibration and effective pressure vs MAP |
+| Oil pressure | Link MIPS 101-0325 on B37 / AIN6 | Confirm calibration and develop RPM-dependent protection with tuner |
+| Flex fuel | GM/Continental 13507129 on B9 | Confirm frequency/ethanol reading against known fuel |
+| DBW | late-Celica ETB + pedal | Wizard, redundant-track plausibility, failsafe, idle behavior |
+| VVT | G4 / AUX6 low-side after OCV power conversion | Verify wiring, output polarity/frequency, cam response |
+| VVL | G3 / H-Bridge 2A | Verify lift output ownership and changeover behavior |
+| Boost control | existing Tru-Boost MAC valve on G22 / Injector 6 | Verify electrical suppression, base-boost failsafe, open-loop duty before closed-loop control |
+| MAP | EMU internal MAP for Baseline Plus | Confirm hose integrity/range/calibration |
+| IAT | expected OEM MAF-integrated IAT path | Verify actual input path and live response before relying on it |
 
 ## 6. Bench-validation plan
 
-Bench work is intentionally narrow. The immediate goal is to make the real EMU Black believe the actual 2ZZ trigger system is rotating before adding CAN, DBW, dyno instrumentation or other simulated vehicle functions.
+Immediate bench work stays narrow: prove the actual EMU can synchronize to a credible 2ZZ trigger pattern before adding broader simulator scope.
 
-### Step 1 — 2ZZ crank/cam synchronization
+### Step 1 — crank/cam synchronization
 
-**Goal:** Arduino Uno + Ardu-Stim reproduce the actual 2ZZ crank/cam strategy, and the EMU reports stable synchronization and commanded RPM.
+Target:
 
-Reference target:
-
-- crank / primary trigger: 2ZZ 36-position wheel with 2 missing teeth (36-2);
-- cam sync: actual 2ZZ cam pattern and phase relationship;
-- EMU legacy inputs: **B8 Primary Trigger**, **B21 Cam Sync IN #1**;
-- Ardu-Stim source: Arduino Uno R3;
-- RPM control: software-commanded RPM first; optional A0 potentiometer afterward.
-
-Do not declare the custom Ardu-Stim pattern verified until crank and cam waveforms/phasing have been checked against the chosen authoritative 2ZZ/EMU references.
-
-### Step-1 evidence table
+- 2ZZ crank pattern: 36-position wheel with 2 missing teeth;
+- actual 2ZZ cam pattern and phase relationship;
+- EMU B8 Primary Trigger;
+- EMU B21 Cam Sync IN #1;
+- Arduino Uno R3 + Ardu-Stim source;
+- scope simulated crank/cam before trusting ECU synchronization.
 
 | Test | Acceptance criterion | Status |
 |---|---|---|
-| EMU bench power | Stable client connection at current-limited bench power | **BENCH-TESTED** |
-| EMU USB communication | Client connects and reports ECU state | **BENCH-TESTED** |
-| Arduino crank waveform | Expected 2ZZ crank pattern visible on oscilloscope | PENDING |
-| Arduino cam waveform | Expected 2ZZ cam pattern visible on oscilloscope | PENDING |
-| Crank/cam phase | Pattern relationship agrees with selected 2ZZ reference | PENDING |
-| EMU crank synchronization | Synchronized at cranking RPM without trigger errors | PENDING |
-| EMU cam synchronization | Stable phase/cam sync | PENDING |
-| RPM tracking | EMU follows commanded RPM from cranking through useful test range | PENDING |
-| RPM-pot control | Optional physical dial changes commanded RPM smoothly | OPTIONAL |
+| EMU bench power | Stable client connection | **BENCH-TESTED** |
+| USB communication | Client reports ECU state | **BENCH-TESTED** |
+| Arduino crank waveform | Expected pattern on oscilloscope | PENDING |
+| Arduino cam waveform | Expected pattern on oscilloscope | PENDING |
+| Crank/cam phase | Agrees with selected 2ZZ reference | PENDING |
+| EMU crank sync | Stable at cranking RPM without unexplained trigger errors | PENDING |
+| EMU cam sync | Stable phase/cam sync | PENDING |
+| RPM tracking | Reported RPM follows commanded RPM through test range | PENDING |
 
-### Stop condition for Step 1
-
-Step 1 is complete when:
-
-1. the Arduino output is scoped and confirmed;
-2. EMU reports stable crank/cam synchronization;
-3. commanded RPM is tracked correctly through the chosen test range;
-4. trigger errors remain absent / understood;
-5. the actual configuration and evidence are recorded here.
-
-Do **not** add dyno-box development, DBW, CAN, output LEDs or a full ECU simulator panel to this task merely because they are interesting.
+Stop when trigger synchronization is proven and recorded. Do not turn this task into a full ECU simulator panel.
 
 ## 7. Real-engine commissioning gates
 
-The imported project should mature through explicit gates rather than one large "base map verified" state.
-
 ### Gate A — trigger / phase
 
-- crank and cam pattern verified;
-- sensor type/polarity/thresholds verified on the real engine;
-- stable crank and cam synchronization;
+- real sensor type/polarity/thresholds verified;
+- stable crank/cam synchronization;
 - TDC/reference angle verified mechanically;
 - VVT home/offset verified.
 
-### Gate B — physical output ownership
+### Gate B — output ownership
 
-Before enabling fuel or spark:
+Before fuel/spark enable:
 
+- injector and ignition output-to-cylinder assignments verified;
 - firing order verified;
-- injector output-to-cylinder assignment verified;
-- ignition output-to-cylinder assignment verified;
-- coil type/dwell verified;
-- injector calibration verified.
+- coil dwell verified;
+- injector characterization verified.
 
 ### Gate C — sensor / DBW sanity
 
-- CLT, IAT, MAP/BARO and lambda sanity checked;
-- actual TPS/PPS channels validated;
-- DBW wizard completed if DBW is active;
-- redundant pedal/throttle plausibility and failsafes verified;
-- required pressure/protection channels calibrated before protection logic relies on them.
+- CLT, IAT, MAP and lambda plausible;
+- Link fuel/oil pressure sensors calibrated;
+- flex-fuel reading plausible;
+- TPS/PPS main/check channels valid;
+- DBW wizard complete and failsafes tested.
 
 ### Gate D — first fire / idle
 
-- V3 cranking fuel reviewed;
-- cranking airflow reviewed;
-- initial VE / lambda strategy appropriate for hardware;
+- V3 cranking fuel and airflow reviewed;
+- initial VE/lambda strategy appropriate;
 - ASE reviewed;
-- idle airflow / idle ignition strategy configured sufficiently for commissioning.
+- DBW idle airflow/idle ignition sufficiently configured.
 
 ### Gate E — running-engine controls
 
-- VVT offset and control validated;
+- VVT offset/control validated;
 - VVL control validated;
-- cooling fan, fuel pump and main relay behavior validated;
-- knock strategy validated before relying on it;
-- acceleration enrichment / overrun / drivability strategies reviewed.
+- cooling fan, fuel pump, main relay, A/C interactions validated;
+- knock strategy validated before reliance;
+- transient and overrun behavior reviewed.
 
 ### Gate F — boost / protection / final calibration
 
-- final boost-control architecture configured;
-- protection sensors and thresholds validated;
-- tuner reviews protection strategy;
-- high-load calibration proceeds only after preceding gates are closed.
+Proceed to meaningful load only after preceding gates close:
 
-## 8. Configuration/evidence archive
+- verify MAC plumbing fails to mechanical/base boost with solenoid de-energized;
+- establish safe open-loop solenoid duty behavior before closed-loop tuning;
+- verify overboost protection;
+- verify fuel-pressure-vs-MAP monitoring;
+- establish oil-pressure-vs-RPM protection;
+- review lambda, knock, CLT/IAT and boost-response protections with tuner;
+- then perform high-load calibration.
 
-Preserve future evidence here or under `references/emu/` as appropriate:
+## 8. Evidence archive
 
-- raw V2 -> V3 import logs;
-- screenshots/exported values for trigger configuration;
-- Ardu-Stim 2ZZ wheel definition/version;
-- oscilloscope captures of simulated crank/cam;
+Preserve only evidence that helps reproduce or validate the setup:
+
+- V2 -> V3 migration logs;
+- final trigger configuration and scope captures;
+- Ardu-Stim wheel definition/version;
 - EMU trigger-scope captures;
-- bench-test notes and commanded-vs-reported RPM results;
-- tuner-reviewed configuration snapshots where useful.
+- commanded-vs-reported RPM results;
+- commissioning configuration snapshots;
+- tuner-reviewed protection settings where useful.
 
-Do not rely on chat history, ECU project files alone, or tuner memory as the only record of why a commissioning setting is considered valid.
+Do not duplicate the hardware BOM, final sensor roadmap, or task queue here.
