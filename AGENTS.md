@@ -102,20 +102,25 @@ Protect these selected principles unless new evidence explicitly changes them:
 
 Do not collapse the interim and final electrical architectures.
 
-### Interim commissioning
+### Interim commissioning / Baseline Better
 
+- Preserve the PowerFC electrical/body-function baseline and archive the current PowerFC calibration before removal.
 - Install and validate the return-style fuel system on the current engine.
 - Install EMU Black through the MWR adapter.
-- Keep the current cable-throttle/simple current-engine configuration.
-- Use the running car to validate fuel delivery, ECU behavior, diagnostics, tuning, and the tuner relationship.
+- Retain the MWR PCB as the interim Celica/body integration layer.
+- DBW is now intentionally part of the interim validation stage if the late-2ZZ OEM ETB fits the 2000 manifold and the bench proof succeeds.
+- Prefer a dedicated DBW bypass/sub-harness at the short EMU-to-MWR extension rather than PCB modification.
+- Current working output strategy is H-Bridge 1A/1B for the ETB motor, AUX6 for VVT after IAC deletion, and H-Bridge 2A retained for VVL. This remains subject to physical continuity/routing verification before construction.
+- Use redundant TPS/PPS sensing when the selected pedal/ETB and EMU inputs support it.
+- Use the running car to validate fuel delivery, ECU behavior, DBW, idle/VVT/VVL, diagnostics, body/cluster integration, and the tuner relationship.
 
-The MWR adapter is a commissioning tool, not the intended finished harness architecture.
+The MWR adapter is a commissioning/integration bridge, not the intended finished harness architecture.
 
 ### Final
 
 - Built 2ZZ + E153 on the spare subframe.
 - EMU Black direct integration through a full custom harness.
-- DBW.
+- Carry forward the DBW architecture proven during interim commissioning where practical.
 - Flex fuel.
 - Final turbo/intake/charge architecture once selected.
 - Final instrumentation/protection functions after the real I/O map is known.
@@ -177,9 +182,9 @@ A component may validate geometry without becoming the final component.
 
 ## Intake / DBW discipline
 
-DBW is selected; the exact throttle body/plenum architecture is not.
+DBW is selected. A used 2003–2005 Celica GT-S OEM ETB is the current Baseline Better POC hardware and must be physically checked on the 2000 manifold before being treated as bolt-on.
 
-Corolla 2ZZ runners and custom printed/aluminum-plenum concepts are available development paths, but a proven OEM/off-the-shelf DBW solution remains acceptable if it satisfies the requirement.
+Corolla 2ZZ runners and custom printed/aluminum-plenum concepts remain available final-development paths, but proving an OEM late-Celica ETB during interim commissioning is preferred if it satisfies fitment, current, sensing, calibration, and failsafe requirements.
 
 Do not select a throttle body solely by bore/bolt pattern. Verify redundant position sensing, electrical compatibility, actuator current/control requirements, calibration, and failsafe behavior with EMU Black.
 
@@ -217,30 +222,3 @@ Do not buy sensors merely because an input appears available.
 - **CeliKey** owns passive entry/body-control/keyless-start R&D.
 - **Celica Side Projects** owns BBK and EPS.
 - **Celica-engineering-knowledge** preserves shared factory/reference knowledge.
-
-Create explicit dependencies when another repo owns the work rather than duplicating tasks.
-
-## Definition of done
-
-A task is not done merely because activity occurred. Before setting `done`:
-
-1. preserve the useful result in durable documentation;
-2. update affected decisions/current architecture;
-3. add only genuinely useful follow-on tasks;
-4. reconcile dependencies and newly ready work;
-5. preserve test/CAD/log/source references where relevant;
-6. update maturity if the project state materially changed.
-
-## End-of-session reconciliation
-
-After meaningful engineering work, ask:
-
-- What fact was established?
-- What assumption changed?
-- What decision changed or remains open?
-- What needs verification?
-- What task became ready/blocked/done?
-- Did another project inherit a dependency?
-- Is the durable record sufficient to resume months later?
-
-Do not paste chat transcripts as engineering state. Convert them into concise, current technical memory.
