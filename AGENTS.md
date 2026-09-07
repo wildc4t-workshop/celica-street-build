@@ -4,69 +4,47 @@
 
 This repository is the engineering system of record for the **final major drivetrain and controls build** of the 2000 US-spec Toyota Celica GT-S.
 
-It consolidates work that was previously staged as separate turbo/hot-side, charge-cooling, EMU Black, engine-harness, instrumentation, BEAN/cluster, intake/DBW, and packaging projects. Do **not** recreate those as separate active repositories unless the program architecture is deliberately changed.
+Do not recreate historical subsystem repositories for turbo, intake, EMU, harness, instrumentation, or packaging unless the program architecture is deliberately changed.
 
 The Street Build must remain understandable without chat history.
 
 ## Core operating rule
 
-**Markdown is durable engineering memory. `tasks.csv` is engineering attention. `project.yaml` is machine-readable project state. The dashboard is derived only.**
+**Markdown is durable engineering memory. `tasks.csv` is engineering attention. `project.yaml` is compact machine-readable state. The dashboard is derived only.**
 
-Do not leave durable conclusions only in chat, tasks, commit messages, ECU files, CAD, or tuner notes. Convert useful outcomes into the repository.
+Do not leave durable conclusions only in chat, task notes, commits, ECU files, CAD, or tuner memory.
 
-## Read before changing state
+Before changing state, read at minimum:
 
-Before making technical or project-state changes, read at minimum:
+- `PROJECT.md`;
+- `tasks.csv`;
+- `project.yaml`;
+- the affected topic document;
+- relevant factory/reference material when year-specific behavior matters.
 
-- `PROJECT.md`
-- `tasks.csv`
-- `project.yaml`
-- any topic-specific document that exists for the affected subsystem
-- relevant vehicle-wide reference material in `Celica-engineering-knowledge` when year-specific factory behavior matters
+Treat current repository state as authoritative unless the user explicitly corrects it.
 
-Treat current repository state as authoritative unless the user is explicitly correcting it.
+## Evidence / decision discipline
 
-## Collaboration rule
+Classify information appropriately:
 
-The user may provide natural-language status updates from any chat, for example:
-
-- `Street Build: the tuner is selected.`
-- `The fuel rail is installed.`
-- `That sensor is actually stock, not upgraded.`
-
-Do not require the user to know task IDs, filenames, or CSV structure. Read the repository, resolve the affected state, update durable documentation/tasks as appropriate, and report what changed.
-
-If the user says not to update GitHub yet, discuss only.
-
-## State and evidence discipline
-
-Classify information as appropriate:
-
-- fact / observation
-- inference
-- tentative direction
-- selected decision
-- rejected / superseded decision
-- open question
-- executable task
+- fact / observation;
+- inference;
+- tentative direction;
+- selected decision;
+- rejected / superseded decision;
+- open question;
+- executable task.
 
 Useful evidence labels include `MEASURED-CAR`, `BENCH-TESTED`, `FACTORY-DOC`, `MANUFACTURER`, `COMMUNITY-CORROBORATED`, `CAD-DERIVED`, `INFERRED`, and `TENTATIVE`.
 
 **Owning hardware does not imply architectural commitment. Exploration does not imply selection.**
 
-For the 2000 GT-S, do not silently assume later 2002–2005 2ZZ/Celica wiring, sensors, or network behavior is identical.
+Do not silently assume 2002–2005 Celica wiring/sensors/network behavior is identical to the 2000 GT-S.
 
-## Task and decision IDs
+## Task discipline
 
-Use consolidated Street Build task IDs:
-
-`STREET-###`
-
-Use decision IDs:
-
-`DEC-STREET-###`
-
-The historical subsystem prefixes (`TUR-`, `A2W-`, `EMU-`, `HAR-`, `SNS-`, `NET-`, `PKG-`, `INT-`) came from the abandoned one-repository-per-subsystem architecture. Do not create new tasks under those prefixes.
+Use `STREET-###` task IDs and `DEC-STREET-###` decision IDs.
 
 Canonical task schema:
 
@@ -76,149 +54,137 @@ id,title,status,action,time_min,context,cost,priority,blocked_by,decision_needed
 
 Statuses: `backlog`, `ready`, `doing`, `blocked`, `verify`, `done`.
 
-Keep `tasks.csv` limited to currently useful executable work. Do not turn every design thought, owned part, or future possibility into a dashboard task.
+Keep `tasks.csv` limited to useful executable work. Do not turn every design thought or owned part into a dashboard task.
 
 ## Governing program architecture
 
-Protect these selected principles unless new evidence explicitly changes them:
+Protect these selected principles unless new evidence changes them:
 
-- This is intended to be the **last major drivetrain rebuild** of the Celica.
-- 2ZZ remains the engine architecture.
-- Turbocharged street build remains the direction.
-- EMU Black replaces the Apexi PowerFC.
-- DBW and flex fuel are required in the final build.
-- A purpose-built custom engine/control harness is the intended final architecture.
-- A/C must remain functional.
-- Preserve factory body/cluster functionality where practical.
-- Roughly 500 whp is a **maximum capability/design envelope**, not the default map.
-- Normal operation should be conservative, predictable, street-friendly, and serviceable.
-- Keep the current car usable as long as practical.
-- Use the spare subframe and replacement drivetrain as the integration buck.
-- Pre-integrate major hard interfaces off-car; do not build a redundant second car on the floor.
-- Optional experiments require an exit ramp and may not hold the car hostage.
-- Prefer mature/OEM/off-the-shelf solutions where they satisfy the requirement; reserve custom engineering for places where it adds real value.
+- this is intended to be the last major drivetrain rebuild;
+- 2ZZ remains the engine architecture;
+- turbocharged street build remains the direction;
+- EMU Black replaces PowerFC;
+- DBW and flex fuel are required;
+- final architecture uses a purpose-built engine/control harness with the EMU in the cabin;
+- A/C remains functional;
+- practical factory body/cluster behavior should be preserved;
+- ~500 whp is a maximum design envelope, not the default map;
+- normal operation should be conservative, predictable, and serviceable;
+- keep the current car usable as long as practical;
+- use the spare subframe/replacement drivetrain as the integration buck;
+- optional experiments require an exit ramp;
+- prefer mature/OEM/off-the-shelf solutions where they meet the need.
 
-## Staged controls/fuel strategy
+## Stage ownership
 
-Do not collapse the interim and final electrical architectures.
+### Baseline Plus — interim current-engine commissioning
 
-### Interim commissioning / Baseline Better
+Authoritative architecture: [`BASELINE_PLUS.md`](BASELINE_PLUS.md).
 
-- Preserve the PowerFC electrical/body-function baseline and archive the current PowerFC calibration before removal.
-- Install and validate the return-style fuel system on the current engine.
-- Install EMU Black through the MWR adapter.
-- Retain the MWR PCB as the interim Celica/body integration layer.
-- DBW is now intentionally part of the interim validation stage if the late-2ZZ OEM ETB fits the 2000 manifold and the bench proof succeeds.
-- Prefer a dedicated DBW bypass/sub-harness at the short EMU-to-MWR extension rather than PCB modification.
-- Current working output strategy is H-Bridge 1A/1B for the ETB motor, AUX6 for VVT after IAC deletion, and H-Bridge 2A retained for VVL. This remains subject to physical continuity/routing verification before construction.
-- Use redundant TPS/PPS sensing when the selected pedal/ETB and EMU inputs support it.
-- Use the running car to validate fuel delivery, ECU behavior, DBW, idle/VVT/VVL, diagnostics, body/cluster integration, and the tuner relationship.
+Selected direction:
 
-The MWR adapter is a commissioning/integration bridge, not the intended finished harness architecture.
+- MWR adapter/PCB remains the interim Celica/body integration bridge;
+- removable jumper/sub-harness carries modifications;
+- late-Celica OEM DBW is pulled forward if ETB fit/bench validation succeeds;
+- H-Bridge 1A/1B -> ETB motor;
+- AUX6 -> VVT after verified OCV power/low-side conversion;
+- H-Bridge 2A -> VVL;
+- Radium 20-0589 + GM/Continental 13507129 -> flex fuel;
+- Link MIPS 101-0325 -> fuel pressure and oil pressure;
+- Bosch LSU 4.9 -> native EMU wideband;
+- existing Tru-Boost MAC valve -> G22 / Injector 6 for EMU boost control;
+- current MAF/IAT and internal-MAP hose may remain temporarily where that avoids scope.
 
-### Final
+Do not add final-build sensor development to Baseline Plus unless it materially helps current-engine commissioning.
 
-- Built 2ZZ + E153 on the spare subframe.
-- EMU Black direct integration through a full custom harness.
-- Carry forward the DBW architecture proven during interim commissioning where practical.
-- Flex fuel.
-- Final turbo/intake/charge architecture once selected.
-- Final instrumentation/protection functions after the real I/O map is known.
+### Final build
 
-## EMU Black / controls discipline
+Authoritative sensor direction: [`FINAL_SENSOR_TOPOLOGY.md`](FINAL_SENSOR_TOPOLOGY.md).
 
-Maintain one authoritative final I/O allocation when that work becomes mature enough to freeze.
+- built 2ZZ + E153 on spare subframe;
+- MWR adapter removed from final control architecture;
+- full custom engine/control harness;
+- EMU mounted in cabin;
+- MAF deleted;
+- local external MAP near throttle/manifold interface;
+- dedicated post-intercooler IAT or justified TMAP;
+- CAN expansion used primarily for secondary/development channels such as EMAP, multi-channel EGT, oil temp, coolant pressure, etc.
 
-For every allocated channel, preserve device, signal type/range, power/ground reference, calibration source, failure behavior, and verification status.
+Do not move proven critical direct signals onto CAN merely to make the architecture visually uniform.
 
-Do not allocate inputs informally or buy a broad sensor package before required control functions, DBW/flex/turbo architecture, available I/O/CAN expansion, and tuner input are understood.
+## EMU / commissioning discipline
 
-Protection logic should document sensor validity, thresholds, hysteresis/delay, action, and recovery behavior rather than inventing unsupported numbers.
+Authoritative commissioning record: [`EMU_COMMISSIONING.md`](EMU_COMMISSIONING.md).
 
-Commission progressively: power/grounds -> communications -> sensor sanity -> actuator checks -> cranking sync -> fuel/ignition -> DBW -> idle/VVT/VVL -> boost -> advanced strategies.
+Keep the two reference-map roles separate:
+
+- recovered MWR supercharged-2ZZ Celica map = MWR/Celica I/O and integration reference;
+- Lotus 2ZZ DBW map = DBW implementation reference.
+
+Neither is a validated tune for this car.
+
+Commission progressively:
+
+> power/grounds -> communication -> trigger sync -> sensor sanity -> output ownership -> fuel/ignition -> DBW -> idle/VVT/VVL -> boost -> protections -> high load
+
+For protection logic, document sensor validity, thresholds, hysteresis/delay, action, and recovery behavior. Do not invent unsupported threshold values.
 
 ## Harness discipline
 
-The final harness must be rebuildable/serviceable from documentation.
+Authoritative connector register: [`HARNESS_CONNECTORS.md`](HARNESS_CONNECTORS.md).
 
-For every device connector preserve year applicability, housing/series when known, terminal and seal families, wire compatibility, source/confidence, and actual-car verification status.
+The final harness must be rebuildable/serviceable from documentation. Preserve for every production connector/device:
 
-Do not call a connector identified from appearance alone when the terminal ecosystem remains uncertain.
+- year/application basis;
+- housing/family;
+- terminal/seal and wire compatibility;
+- pin map;
+- wire type/gauge;
+- sensor/power-ground ownership;
+- splice strategy;
+- shielding/twisted-pair needs;
+- fuse/relay ownership;
+- strain relief and heat/abrasion protection;
+- crimp/extraction tooling;
+- evidence/verification state.
 
-Maintain controlled pin maps, grounding architecture, splice strategy, shielding/twisted-pair requirements, relay/fuse ownership, strain relief, heat/abrasion protection, and crimp tooling information.
+Do not call a connector production-ready from appearance or catalog cross-reference alone.
 
-Coil and injector sub-harnesses may be used where they improve modularity/serviceability.
+## Factory body / MPX discipline
 
-## Factory cluster / BEAN / MPX discipline
+The current PowerFC behavior is evidence, not proof of EMU compatibility.
 
-The current PowerFC behavior is evidence, not proof of EMU compatibility. The MIL currently works and the cluster appears broadly functional; preserve actual-car observations before removing the baseline ECU architecture.
+Before removing the known-good architecture, capture the minimum evidence defined in [`PRE_EMU_BASELINE.md`](PRE_EMU_BASELINE.md).
 
-For captures/characterization, record vehicle state, ignition/engine state, exact test point, voltage levels, sampling settings, triggered action, log filename, repeated observations, and controls/baselines.
+Prefer passive observation before active injection. Do not treat Toyota MPX/BEAN as standard CAN merely because CAN tools are available.
 
-Prefer passive observation before active injection. Do not treat BEAN/MPX as standard CAN merely because CAN tools are available.
+## Turbo / intake / charge discipline
 
-Maintain signal ownership for functions such as tach, coolant display, MIL, vehicle speed, charging warning, A/C interactions, fan control, and diagnostic/body dependencies.
+Known hot-side fallback: existing TurboKits.com T28-flanged architecture.
 
-## Turbo / hot-side discipline
+Modular sidewinder remains an investigation, not a selected final architecture. Cheap TD05-style manifold/20G hardware are development aids.
 
-The **known viable fallback** remains the existing TurboKits.com T28-flanged architecture.
+DBW is selected, but the purchased 2003–2005 Celica GT-S ETB still requires physical fit and electrical validation on the 2000 manifold.
 
-The modular sidewinder architecture is an investigation, not a selected final architecture. Cheap cast TD05-style hardware and the inexpensive 20G are test/mule hardware.
+A2W remains optional. Existing TurboKits.com intercooling remains a viable baseline.
 
-If sidewinder work continues, optimize globally for:
-
-- A/C and power-steering retention
-- belt/accessory and radiator service
-- oil-drain geometry
-- wastegate priority/control
-- downpipe and charge routing
-- engine movement
-- thermal protection
-- fastener/tool access
-- turbo removal path
-- future modular turbo changes
-
-A component may validate geometry without becoming the final component.
-
-## Intake / DBW discipline
-
-DBW is selected. A used 2003–2005 Celica GT-S OEM ETB is the current Baseline Better POC hardware and must be physically checked on the 2000 manifold before being treated as bolt-on.
-
-Corolla 2ZZ runners and custom printed/aluminum-plenum concepts remain available final-development paths, but proving an OEM late-Celica ETB during interim commissioning is preferred if it satisfies fitment, current, sensing, calibration, and failsafe requirements.
-
-Do not select a throttle body solely by bore/bolt pattern. Verify redundant position sensing, electrical compatibility, actuator current/control requirements, calibration, and failsafe behavior with EMU Black.
-
-Printed prototypes validate packaging/assembly, not boost-pressure durability.
-
-## Charge cooling / packaging discipline
-
-A2W is optional, not a requirement. The existing TurboKits.com intercooler system remains a viable baseline unless a different architecture earns its complexity.
-
-For any charge-routing or cooling design preserve geometry sources, keep-out zones, engine movement allowance, A/C/PS clearance, hose/wire clearance, wrench access, assembly/removal path, thermal constraints, and support strategy.
-
-Low-cost scans are useful for packaging but are not metrology truth for critical hardpoints without confirmation.
-
-Do not choose AM, composites, printed metal, Wiggins/HD clamps, V-bands, or welded fabrication for novelty. Record the requirement each manufacturing choice solves.
+Do not select fabrication methods, clamps, printed metal, composites, or custom manifolds for novelty. Record the requirement each custom choice solves.
 
 ## Instrumentation discipline
 
-Current car has an AEM Tru-Boost gauge/control and AEM wideband gauge.
+Baseline Plus hardware already selected for control/protection should not be described as merely a candidate:
 
-Long-term display/sensor architecture is intentionally deferred. Oil pressure, oil temperature, fuel pressure, EGT, exhaust pressure, and similar channels are **candidates**, not frozen requirements.
+- Link fuel pressure;
+- Link oil pressure;
+- LSU 4.9;
+- Continental flex fuel;
+- MAC boost-control solenoid.
 
-Sequence instrumentation work as:
-
-1. define required control/protection functions;
-2. establish final EMU I/O map and expansion options;
-3. identify sensors that materially support protection, tuning, diagnosis, or verification;
-4. review with the tuner;
-5. select permanent vs development-only sensors and display strategy.
-
-Do not buy sensors merely because an input appears available.
+Final secondary/development instrumentation remains open and should be selected only when it materially supports protection, tuning, diagnosis, or validation.
 
 ## Cross-project boundaries
 
-- **Celica Baseline** owns current-car maintenance, A/C restoration, hydraulic PS restoration, seats, and current-car charge-pipe refinement.
-- **CeliKey** owns passive entry/body-control/keyless-start R&D.
-- **Celica Side Projects** owns BBK and EPS.
-- **Celica-engineering-knowledge** preserves shared factory/reference knowledge.
+- `celica-baseline` — current-car maintenance, A/C, hydraulic PS, seats, current mechanical baseline.
+- `CeliKey` — passive entry/body-control/keyless-start R&D.
+- `celica-side-projects` — BBK and EPS.
+- `Celica-engineering-knowledge` — shared factory/reference knowledge.
