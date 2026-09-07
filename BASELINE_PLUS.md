@@ -285,3 +285,39 @@ The architecture is selected, but these physical facts must be checked before fa
 6. **Toyota ETB/pedal connector cavities:** verify against the 2005 EWD and the actual purchased hardware before terminating the production sub-harness.
 
 These are verification gates, not reopened architecture decisions.
+
+---
+
+## 9. Final-harness MAP transition / ETB-adapter opportunity
+
+Baseline Plus may continue using the EMU Black's internal MAP sensor and the existing manifold-pressure hose because the interim ECU/MWR installation does not justify rebuilding the intake interface solely to eliminate that hose.
+
+When the EMU Black moves into the cabin and the full custom harness is built, the preferred final architecture is:
+
+- **external MAP sensor mounted at the intake manifold / throttle-body interface**;
+- a **very short local pressure path** rather than a long vacuum hose running across the engine bay and through the firewall;
+- external MAP wired directly to an EMU analog input as a primary engine-control signal;
+- EMU Black internal pressure sensor available for BARO/reference duty if the final calibration architecture benefits from it;
+- lower-priority instrumentation can migrate to CAN expansion if an analog input must be freed for MAP.
+
+### ETB adapter design opportunity
+
+If the late-Celica electronic throttle body does **not** bolt directly to the 2000 intake manifold and an adapter plate is required, treat that adapter as a useful integration component rather than a simple bolt-pattern converter.
+
+**Design direction:** incorporate a dedicated MAP-sensor boss/interface into the ETB adapter, inspired by the compact Honda-style arrangement that places the MAP sensor directly beside the throttle body/manifold entry. This would allow use of a compact, readily available external MAP sensor with essentially no remote vacuum plumbing.
+
+Concept:
+
+```text
+charge pipe -> ETB -> adapter / MAP boss -> 2000 intake manifold
+                          |
+                          +-> compact external MAP sensor
+                               |
+                               +-> short pressure cavity
+                               +-> 5 V / signal / sensor ground
+                               +-> direct EMU analog input in final harness
+```
+
+**Not yet selected:** exact Honda/OEM MAP sensor part number, pressure range, bolt pattern, O-ring geometry, clocking, or adapter machining dimensions. Do not copy a Honda sensor interface from memory. Select a specific sensor first, obtain the dimensional/transfer-function data, and design the boss around that actual hardware.
+
+This is a **final-build packaging direction**, not additional Baseline Plus scope and not a reason to fabricate an ETB adapter if the late-Celica throttle body already bolts directly to the 2000 manifold.
