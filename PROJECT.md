@@ -1,317 +1,234 @@
 # Celica Street Build — Project State
 
 **Vehicle:** 2000 US-spec Toyota Celica GT-S  
-**Role:** finished street car and useful engineering exercise platform  
+**Role:** finished street car and engineering exercise platform  
 **Checkpoint:** 2026-09-07
 
 ## 1. Objective
 
 The Street Build is intended to be the **last major drivetrain rebuild of the Celica**.
 
-The finished car should be capable of roughly **500 whp** with reliability margin, but that figure is a capability target rather than the normal operating point. The normal personality should be a civilized low-boost street car that can be driven with passengers, used regularly, and enjoyed without treating the drivetrain as fragile.
+Target roughly **500 whp maximum capability**, but normal operation should be conservative, predictable, serviceable, and pleasant enough for ordinary street use. Future evolution should mainly be calibration, suspension/tires, NVH/interior refinement, cosmetics, and modular turbo changes rather than another fundamental drivetrain redesign.
 
-After the Street Build, major progress should come from polishing the finished product: calibration, tires, suspension, alignment, sound system, seats, interior touch points, NVH, body refinements, wheel finish, and similar improvements. A future turbo change should be evolutionary rather than a reason to redesign the whole car.
+## 2. Governing principles
 
-## 2. Governing Principles
+- Keep the current car usable as long as practical.
+- Use the spare subframe/replacement drivetrain as the integration buck.
+- Build hard-to-revisit interfaces once: drivetrain, controls, harnessing, fueling, turbo interfaces, and service access.
+- Prefer mature OEM/off-the-shelf solutions where they satisfy the requirement.
+- Optional experiments need an exit ramp and may not hold the car hostage.
+- Preserve factory body/cluster functionality and A/C where practical.
 
-### Exploration does not imply commitment
-
-The currently viable configuration remains the default until an alternative is explicitly selected. Owning a part or investigating an architecture does not make it a requirement.
-
-### Build the hard interfaces once
-
-Spend engineering effort on systems that are expensive to revisit after installation: drivetrain integration, controls, harnessing, turbo interfaces, fueling, service access, and major packaging.
-
-### Use mature solutions where they are good enough
-
-The Celica is not the heavy-R&D car. Proven parts and OEM-style solutions are preferred when they meet the requirement. Open-ended experimentation should earn its complexity.
-
-### The spare subframe is the integration buck
-
-The current car should stay intact and drivable as long as practical. Anything that can be resolved on the spare drivetrain package should be resolved there before the Celica comes apart.
-
-The goal is **not** to build a second car on the floor. Pre-integrate the major drivetrain and control interfaces; ordinary supporting hardware can be disconnected from the current drivetrain and reconnected during the final swap.
-
-### Optional experiments need an exit ramp
-
-Opportunity work may be developed on the spare package, but it does not get to hold the car hostage. If an optional architecture is not mature when installation time arrives, use the known-good path.
-
-## 3. Program Sequence
+## 3. Program sequence
 
 ### Stage A — Baseline
 
-Baseline is intentionally narrow and belongs to the separate baseline program:
+Owned by the separate `celica-baseline` project:
 
 - maintenance caught up;
 - A/C sorted;
-- power steering sorted;
+- hydraulic power steering sorted;
 - seats installed.
 
-The result is a sorted current-powertrain street car: get in, drive, have fun.
+Result: a sorted current-powertrain street car.
 
-### Stage B — Baseline Better / Independent Validation
+### Stage B — Baseline Plus
 
-Before the major drivetrain swap, upgrade systems that can be validated independently on the running engine with controlled downtime:
+Use the running current engine to validate the systems worth carrying forward:
 
-1. Preserve the current PowerFC electrical/body-function baseline and archive as much of the running PowerFC calibration as practical.
-2. Install the return-style fuel system, pump, rail, and FPR.
+1. Preserve PowerFC calibration, datalogs, MPX/body behavior, fan/A/C behavior, and cluster dependencies.
+2. Install the MWR return fuel system.
 3. Install EMU Black through the MWR adapter.
-4. Convert the current engine to DBW using a late-2ZZ OEM-style ETB/pedal solution if fitment and bench validation succeed.
-5. Retain the MWR PCB for Celica/body integration, but bypass selected EMU pins through a dedicated DBW sub-harness rather than modifying the PCB.
-6. Delete the cable-throttle/IAC hardware after DBW is proven; move VVT from H-Bridge 1A to the freed AUX6 path so H-Bridge 1 can control the ETB motor while VVL remains on H-Bridge 2A.
-7. Have a tuner commission and tune the combined fuel-system / EMU / DBW package.
-8. Drive the car and validate fuel delivery, ECU behavior, DBW, idle/VVT/VVL behavior, diagnostics, body/cluster integration, and the tuner relationship.
-9. Upgrade to appropriate tires before exploiting substantially more power.
+4. Pull late-2ZZ OEM-style DBW forward if the purchased ETB fits and passes bench validation.
+5. Add flex fuel, native LSU 4.9 lambda, fuel pressure, oil pressure, and EMU-native boost control.
+6. Retain the MWR PCB as the interim body/cluster integration bridge while modifying only the removable jumper/sub-harness.
+7. Commission/tune the package and validate cold/hot behavior, DBW, VVT/VVL, protection, boost control, diagnostics, and retained vehicle functions.
+8. Upgrade tires before exploiting materially more power.
 
-This stage deliberately reduces the number of unknowns in the final build while also removing the cable-throttle/IAC/cruise packaging burden from the passenger-side engine-bay corridor. If the current engine fails during tuning or validation, the already-prepared replacement drivetrain is the contingency rather than a new project starting from zero.
+The authoritative Stage-B hardware/I/O/buy-list/sub-harness record is [`BASELINE_PLUS.md`](BASELINE_PLUS.md).
 
-The MWR adapter is therefore a **commissioning and integration bridge**, not necessarily part of the finished harness architecture.
+### Stage C — Replacement drivetrain build
 
-### Stage C — Replacement Drivetrain Build
-
-Build the major package offline around:
+Develop the major package offline around:
 
 - built 2ZZ;
-- E153 transmission;
-- MWR clutch/flywheel;
-- MWR E153 mounts/adapters;
-- MWR E153 axles;
+- E153 factory-LSD transmission;
+- MWR clutch/flywheel, mounts/adapters, and axles;
 - complete spare Celica subframe and rack;
 - final turbo/intake/charge architecture once selected;
-- final EMU Black controls package;
-- full custom engine/control harness;
+- EMU Black;
 - DBW;
-- flex fuel.
+- flex fuel;
+- purpose-built engine/control harness.
 
-Resolve packaging, service clearance, major routing, sensors, mounts, and control interfaces on the spare package wherever practical.
+Resolve packaging, service access, sensor mounting, and major control interfaces off-car wherever practical.
 
-### Stage D — Final Swap and Commissioning
+### Stage D — Final swap / commissioning
 
-The desired swap is closer to:
+Desired sequence:
 
-> Disconnect chassis interfaces → remove current drivetrain/subframe → install substantially complete replacement module → reconnect known supporting interfaces → fluids → startup/commissioning.
+> Disconnect chassis interfaces -> remove current drivetrain/subframe -> install substantially complete replacement module -> reconnect known supporting interfaces -> fluids -> startup/commissioning.
 
-Supporting hardware does not need to be duplicated merely to make the floor assembly look complete.
+Do not duplicate ordinary chassis-side hardware solely to make the floor assembly look complete.
 
-## 4. Selected Final-Build Requirements
-
-The following are current commitments:
+## 4. Selected final-build requirements
 
 - 2ZZ remains the engine architecture.
 - Turbocharged street build remains the direction.
 - EMU Black replaces the Apexi PowerFC.
-- DBW is required in the final Street Build and is now intentionally being pulled forward into Baseline Better if the MWR-adapter proof succeeds.
-- Flex-fuel capability is required in the final Street Build.
-- Full custom engine/control harness is the intended final electrical architecture.
-- A/C must remain functional.
-- Factory body/cluster functionality should be preserved where practical.
-- The car should remain street-friendly, serviceable, and easy to live with.
-- Approximate 500 whp maximum capability is the design envelope, not the default driving condition.
-- Normal operation should support a conservative low-boost street map.
-- Future major power changes should preferably be turbo/calibration changes rather than another drivetrain rebuild.
+- DBW is required.
+- Flex fuel is required.
+- A full custom engine/control harness is the intended final architecture.
+- EMU Black moves into the cabin for the final harness.
+- Final build deletes the OEM MAF assembly.
+- Final build uses a local external MAP sensor and dedicated post-intercooler IAT/TMAP strategy.
+- CAN expansion is preferred for secondary/development instrumentation after direct I/O is consumed.
+- A/C remains functional.
+- Practical factory body/cluster behavior should be preserved.
+- Approx. 500 whp is a design envelope, not the default driving mode.
 
-## 5. Electrical / Controls Strategy
+The final MAP/IAT/CAN direction is owned by [`FINAL_SENSOR_TOPOLOGY.md`](FINAL_SENSOR_TOPOLOGY.md).
 
-### Interim / Baseline Better
+## 5. Controls strategy
 
-- EMU Black installed through the MWR adapter.
-- MWR PCB retained as the Celica/body integration layer.
-- Dedicated DBW bypass/sub-harness added at the short EMU-to-MWR extension harness.
-- H-Bridge 1A/1B reserved for the ETB motor after moving VVT control to AUX6.
-- VVL remains on H-Bridge 2A unless bench/vehicle evidence requires a change.
-- Redundant throttle and pedal position sensing should be used where the selected hardware supports it.
-- Current cable throttle and IAC are deleted only after DBW fitment and bench validation succeed.
+### Baseline Plus
 
-The EMU Black has been successfully bench-powered, connected, and migrated to **V3.061**. Two distinct reference calibrations are now available and must not be conflated:
+- legacy EMU Black, hardware rev F / CPU rev G, firmware/client 3.061;
+- MWR adapter retained as interim Celica integration layer;
+- removable sub-harness handles DBW/VVT/pressure/flex/lambda/boost additions;
+- H-Bridge 1A/1B -> ETB motor;
+- AUX6 -> VVT after proper OCV power/low-side conversion;
+- H-Bridge 2A -> VVL;
+- Injector 6 / G22 -> existing Tru-Boost MAC valve for EMU-native PWM boost control;
+- Link MIPS 101-0325 sensors selected for fuel and oil pressure;
+- Bosch LSU 4.9 selected for native lambda;
+- GM/Continental 13507129 + Radium 20-0589 selected for flex fuel.
 
-1. **MWR 2023 supercharged 2ZZ Celica base map** — cable-throttle, MWR-adapter-specific reference for vehicle I/O ownership and integration.
-2. **Lotus 2ZZ DBW reference map** — DBW implementation reference showing H-Bridge 1 throttle control and auxiliary-output VVT/VVL strategy.
-
-Neither is considered a validated calibration for this car. The intended interim configuration is a deliberate hybrid based on actual MWR routing, late-2ZZ DBW hardware, bench validation, and tuner commissioning. See [`EMU_COMMISSIONING.md`](EMU_COMMISSIONING.md).
+Detailed I/O and verification gates live in [`BASELINE_PLUS.md`](BASELINE_PLUS.md). ECU migration/bench/commissioning evidence lives in [`EMU_COMMISSIONING.md`](EMU_COMMISSIONING.md).
 
 ### Final
 
-- Remove the temporary adapter architecture.
-- Wire EMU Black directly through a purpose-built custom harness.
-- Retain the DBW architecture already proven during Baseline Better where practical.
-- Add flex fuel and final instrumentation/protection functions.
-- Use the 2000 Celica EWD as the vehicle-year baseline and the 2005 Celica EWD deliberately where late 2ZZ hardware is selected.
-- Define actual EMU I/O allocation before buying the broad final sensor package.
-- Let the final sensor/protection strategy follow the real I/O map, available CAN expansion, and tuner input.
+- remove MWR adapter architecture;
+- wire EMU directly through the custom harness;
+- carry forward proven DBW/flex/lambda/pressure/boost-control strategies where practical;
+- use local external MAP + dedicated IAT/TMAP instead of long vacuum plumbing / factory MAF;
+- expand over CAN for EMAP, multi-channel EGT, oil temperature, coolant pressure, and similar secondary/development channels as justified.
 
-### Custom-harness connector verification
-
-The first controlled connector-identification pass is underway. Unwired Ballenger Motorsports connector kits have been ordered for the currently expected OEM engine-device interfaces: crank/cam, VVT/VVL, VVTL/oil-pressure switch family, coolant temperature, late 2ZZ knock, ignition coil, late 2ZZ DBW throttle, accelerator pedal, and alternator control.
-
-This purchase is a **verification set**, not a production harness order. Connector part numbers are supported by the 2000/2005 Toyota EWDs and supplier cross-references, but actual hardware fit, terminal/seal families, wire compatibility, and production quantities remain to be physically verified. The controlled register and verification procedure are maintained in [`HARNESS_CONNECTORS.md`](HARNESS_CONNECTORS.md).
-
-The intended end state is a rebuildable full harness BOM that preserves device, housing, terminal, seal, wire, pin map, shielding/grounding, branch protection, tooling, and verification evidence without requiring chat history.
-
-### Instrumentation / sensing direction
-
-A dedicated external **MAP** and dedicated **EMAP/exhaust-pressure** measurement are part of the current sensing direction, with EMU Black's internal pressure sensor available for barometric/reference use if the final I/O strategy supports that arrangement. EGT provision is also desired for turbo/hot-side development and protection work.
-
-Exact MAP/EMAP sensors, pressure ranges, EGT interface/channel count, oil/fuel pressure instrumentation, oil temperature, and other expansion channels are **not yet hardware-frozen**. Those choices remain downstream of final EMU I/O/CAN allocation and tuner review.
-
-## 6. Known Replacement-Drivetrain Hardware
+## 6. Known replacement-drivetrain hardware
 
 ### Engine
 
-Confirmed/recalled:
+Confirmed/recalled hardware:
 
 - sleeved 2ZZ block;
-- upgraded connecting rods;
 - forged low-compression pistons;
-- ARP main hardware;
-- ARP head studs;
-- ARP rod bolts;
+- upgraded rods;
+- ARP main hardware, head studs, and rod bolts;
 - OEM MLS head gasket;
 - stock cams;
-- upgraded valve springs;
-- titanium retainers;
-- new oil pump;
-- new timing chain;
-- new lift bolts;
-- new thermostat;
-- new water pump;
+- upgraded valve springs and titanium retainers;
+- new oil pump, timing chain, lift bolts, thermostat, and water pump;
 - Moroso upgraded oil pan;
 - upgraded harmonic balancer currently being installed.
 
-Tentative / verify from build records:
+Still verify from build records:
 
-- compression ratio remembered as approximately **9.5:1**;
-- valves are believed to be upgraded stainless valves;
-- balancer is believed to be **ATI**;
-- head is otherwise believed to be largely stock.
+- compression ratio, remembered around 9.5:1;
+- upgraded stainless valve specification;
+- balancer make/model, believed ATI;
+- valve clearance before final installation.
 
-Before final assembly/commissioning:
+### Transmission / chassis integration
 
-- check and record valve clearance;
-- verify compression ratio from build records;
-- verify valve specification;
-- verify balancer make/model.
-
-### Transmission / driveline
-
-- E153 transmission;
-- factory LSD;
+- E153 with factory LSD;
 - MWR clutch/flywheel;
-- MWR E153 mounts and adapter kit;
-- MWR E153 axles.
-
-The driveline is currently considered adequate for the intended build; no further paper design exercise is needed unless real evidence creates a reason to revisit it.
-
-### Chassis integration
-
+- MWR mounts/adapters;
+- MWR axles;
 - complete spare Celica subframe;
-- power-steering rack already installed on spare subframe;
-- Mishimoto upgraded radiator is already installed on the current car and can remain a chassis-side supporting system.
+- power-steering rack already on spare subframe;
+- Mishimoto radiator already on current car.
 
-## 7. Fuel System
+## 7. Fuel / protection hardware selected for Baseline Plus
 
-Owned hardware:
+Owned:
 
-- MWR return-style fuel system;
+- MWR return-style system;
 - MWR fuel rail;
-- AEM fuel-pressure regulator;
+- AEM FPR;
 - AEM fuel pump.
 
-The fuel system is deliberately suitable for early installation on the current engine so it can be validated during the combined Baseline Better EMU/DBW commissioning stage before the final drivetrain swap.
+Selected additions:
 
-## 8. Turbo / Hot-Side Architecture
+- Radium 20-0589 split-flow flex-fuel housing;
+- GM/Continental 13507129 ethanol sensor;
+- 2 × Link MIPS 101-0325 150-PSI pressure sensors;
+- Bosch LSU 4.9;
+- MWR MWR-901465 oil-filter sandwich plate;
+- remote -3AN oil-pressure sender plumbing;
+- existing Tru-Boost MAC valve under EMU control.
 
-### Known-good fallback
+Exact buy state and unresolved fittings are tracked in `BASELINE_PLUS.md` / `tasks.csv`, not duplicated here.
 
-The existing TurboKits.com T28-flanged architecture is usable. A straightforward T28-frame upgrade remains a credible low-risk path. If necessary, another TurboKits.com manifold can be purchased and the replacement drivetrain can be completed around that architecture.
+## 8. Turbo / hot-side architecture
+
+### Known viable fallback
+
+The existing TurboKits.com T28-flanged architecture remains usable and is the low-risk fallback.
 
 ### Modular sidewinder investigation
 
-A preferred engineering concept is under investigation because it could make later turbo changes modular rather than architectural:
+Still under investigation:
 
 - driver-side / sidewinder turbo placement;
-- compact stainless 2ZZ exhaust collector/manifold;
-- EGT provisions;
+- compact stainless collector/manifold;
 - first-priority external-wastegate takeoff;
-- collector terminated in a V-band;
-- replaceable fabricated stainless up-pipe as the turbo-specific interface;
-- ability to change turbo families later without redesigning the engine-side collector.
+- V-band collector termination;
+- replaceable turbo-specific up-pipe;
+- future modular turbo changes without redesigning the engine-side collector.
 
-Cheap development hardware currently available includes a cast TD05-style manifold and inexpensive 20G turbo. These are **test/mule hardware**, not a selected final architecture.
+The cheap cast TD05-style manifold and inexpensive 20G are development/test hardware, not selected final parts.
 
-The modular sidewinder concept is attractive, but it is not selected merely because it has been developed further than other alternatives.
+## 9. Intake / charge / DBW
 
-A BorgWarner SX-E V-band turbo owned elsewhere is currently intended for the Civic, not this Celica build.
+- 2003–2005 Celica GT-S OEM ETB purchased 2026-09-07 for fitment/POC.
+- 2003–2005 Celica accelerator pedal owned.
+- If the late ETB needs an adapter, the adapter may also integrate the final external MAP boss.
+- Corolla 2ZZ runners remain available development hardware.
+- Existing TurboKits.com intercooler architecture remains a viable baseline.
+- A2W remains optional; it must earn its complexity.
 
-## 9. Intake / Charge Cooling
+Exact final intake/plenum/throttle/charge-cooling architecture remains open.
 
-Current DBW direction:
+## 10. Harness / connector strategy
 
-- A used 2003–2005 Celica GT-S 2ZZ OEM ETB has been ordered for physical fitment testing on the 2000 intake manifold.
-- The existing 2003–2005 Celica DBW pedal remains the preferred POC pedal.
-- If the OEM late-Celica ETB fits the 2000 manifold and validates electrically with EMU Black, it becomes the preferred Baseline Better throttle solution because it minimizes fabrication and supports direct late-2ZZ connector documentation.
-- Final throttle body/plenum architecture remains open; proving the OEM ETB now does not prevent a later Bosch/other ETB choice if the final build benefits from it.
+The final harness must be rebuildable from documentation without chat history.
 
-Other open architecture:
+First-pass Ballenger connector kits are received for crank/cam, VVT/VVL, oil-pressure-switch family, ECT, late 2ZZ knock, ignition coils, late DBW throttle, pedal, and alternator. Physical-fit and terminal verification remain pending.
 
-- OEM/off-the-shelf versus custom intake/plenum;
+Connector verification and final BOM rules are owned by [`HARNESS_CONNECTORS.md`](HARNESS_CONNECTORS.md).
+
+## 11. Pre-EMU evidence requirement
+
+Before PowerFC removal, complete the minimum evidence in [`PRE_EMU_BASELINE.md`](PRE_EMU_BASELINE.md):
+
+- body/MPX/cluster behavior;
+- fan and A/C behavior;
+- native PowerFC map archive;
+- controlled cold/hot/cruise/transient/lift/full-load reference datalogs where safe.
+
+Do not delay the EMU transition for open-ended network reverse engineering or an attempted cell-for-cell PowerFC conversion.
+
+## 12. Current open architecture
+
+Remain deliberately open until evidence justifies selection:
+
+- final turbo/hot-side architecture;
+- final intake/plenum/throttle-body architecture after ETB POC;
 - final charge-cooling architecture;
-- whether the existing TurboKits.com intercooler system remains or an A2W solution earns its complexity.
+- exact final external MAP and IAT/TMAP hardware;
+- exact final custom-harness topology and I/O allocation;
+- CAN expansion hardware and secondary instrumentation set;
+- final protection thresholds and display strategy;
+- detailed chassis-side transfer list for swap day.
 
-Owned development hardware includes Corolla 2ZZ intake runners and a 2003–2005 Celica DBW pedal.
-
-## 10. Current Instrumentation
-
-Current car:
-
-- AEM Tru-Boost gauge/control on A-pillar;
-- AEM wideband gauge on A-pillar.
-
-Long-term preference is cleaner integration rather than a permanent collection of aftermarket gauges, but display architecture is intentionally deferred until the final control/data architecture is known.
-
-## 11. Finished-Car Character
-
-The Street Build should be able to do unreasonable things without behaving unreasonably all the time.
-
-Desired normal experience:
-
-- conservative low-boost mode available for routine street use;
-- starts, idles, and drives predictably;
-- A/C works;
-- not excessively loud;
-- not burdened by excessive road noise;
-- good visibility;
-- good sound system;
-- comfortable, supportive seats;
-- pleasant touch points;
-- no constant concern that the drivetrain is made of glass.
-
-The point of the high-power capability is reserve and fun, not an obligation to use maximum output every time the car leaves the garage.
-
-## 12. Post-Build Evolution
-
-Examples of desirable later refinement that should **not** require reopening the core drivetrain architecture:
-
-- better suspension;
-- better tires and chassis setup;
-- alignment and calibration refinement;
-- wheel powder coating / finish work;
-- sound-system improvements;
-- interior/touch-point refinement;
-- carbon-fiber roof / sunroof-delete investigation;
-- turbo swap within the modular interface if desired.
-
-Ideas such as a 2GR with AWD transmission and a custom rear differential cradle are interesting future concepts, but they are outside the Street Build requirements and should not distort this project.
-
-## 13. Current Open Decisions
-
-Do not force these decisions before the work actually requires them:
-
-- final turbo and hot-side architecture;
-- whether the modular sidewinder earns selection over the known T28 path;
-- final intake/plenum/throttle-body architecture after the OEM late-Celica ETB POC;
-- final intercooling architecture;
-- exact custom-harness topology and final EMU I/O allocation;
-- final aftermarket sensor hardware/ranges, CAN expansion, protection logic, and display strategy;
-- detailed chassis-side transfer list for final swap day.
-
-The project should mature these decisions as evidence becomes available rather than pretending they are already frozen.
+These are real open decisions. Selected Baseline Plus hardware should not be repeatedly reopened unless new evidence creates a reason.
