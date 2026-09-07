@@ -2,52 +2,53 @@
 
 Engineering definition, architecture, staging, and execution plan for the final major drivetrain and controls build of a **2000 Toyota Celica GT-S**.
 
-The goal is not to build a perpetual project car. The Street Build is intended to be the **last major drivetrain rebuild of the Celica**. Once complete, future work should primarily be refinement, tuning, bolt-on evolution, and finish-quality improvements rather than another fundamental drivetrain redesign.
+The Street Build is intended to be the **last major drivetrain rebuild** of the car. The finished package should support roughly **500 whp maximum capability** while remaining a civilized, conservative street car in normal use.
 
 ## North Star
 
-> Modernize the Celica enough that it does not feel like an old car to live with, while preserving the lightweight analog character that makes it worth keeping. Use proven solutions where they are good enough; engineer custom solutions where they provide real value.
-
-The finished car should be capable of roughly **500 whp**, but maximum output is a design envelope rather than the default operating condition. Normal use should remain civilized, reliable, and appropriate for ordinary street driving.
+> Modernize the Celica enough that it does not feel old to live with, while preserving the lightweight analog character that makes it worth keeping. Use proven solutions where they are good enough; engineer custom solutions where they provide real value.
 
 ## Program Strategy
 
-1. Finish the narrow mechanical baseline on the current car.
-2. Preserve the known-good PowerFC/body-function baseline before removing it.
-3. Validate independent fuel/EMU upgrades on the running car with minimal downtime.
-4. Build the replacement drivetrain package offline on the spare subframe.
-5. Swap the substantially complete module into the car.
-6. Finish the car through calibration, refinement, suspension/tires, interior, NVH, and cosmetic work rather than another major drivetrain teardown.
+1. Finish the narrow current-car mechanical baseline.
+2. Preserve the known-good PowerFC/body-function baseline.
+3. Use **Baseline Plus** to validate fuel, EMU, DBW, flex fuel, lambda, pressure protection, and boost control on the running current engine.
+4. Build the replacement built-2ZZ/E153 package offline on the spare subframe.
+5. Build the final custom engine/control harness and final sensor topology around the proven controls strategy.
+6. Swap the substantially complete drivetrain package into the car.
+7. Finish through calibration, tires/suspension, NVH, interior, and cosmetic refinement rather than another drivetrain redesign.
 
 ## Current Selected Direction
 
 - Turbocharged 2ZZ remains the engine architecture.
 - ECUMaster EMU Black replaces the Apexi PowerFC.
-- Drive-by-wire is part of the final Street Build.
-- Flex-fuel capability is part of the final Street Build.
-- A/C survives the build.
-- Factory body and cluster functionality should be preserved where practical.
+- Baseline Plus uses the MWR adapter as an interim Celica/body integration bridge.
+- Late-2ZZ OEM-style DBW is being pulled forward into Baseline Plus, subject to ETB fit and bench validation.
+- Flex fuel, native LSU 4.9 lambda, fuel pressure, oil pressure, and EMU-native boost control are selected for Baseline Plus.
+- The final build uses a purpose-built engine/control harness with the EMU mounted in the cabin.
+- The final build deletes the MAF, uses a local external MAP sensor and dedicated post-intercooler IAT, and uses CAN expansion primarily for secondary/development instrumentation.
+- A/C and practical factory body/cluster functionality should survive.
 - The built 2ZZ, E153, and spare subframe form the replacement drivetrain module.
-- The current car stays intact and usable as long as practical.
-- A full custom engine/control harness is the intended final architecture.
-- OEM engine-device connectors are being verified from Toyota EWD identification through supplier cross-reference and physical test fit before production quantities are purchased.
+- The current car stays usable as long as practical.
 
-The exact turbo, hot-side, intake, charge-cooling, aftermarket sensor hardware, final EMU I/O/CAN allocation, and detailed protection/display architecture remain open until explicitly selected.
+The exact final turbo/hot-side, intake/plenum, charge-cooling package, final MAP/IAT hardware, CAN expansion hardware, and detailed final protection thresholds remain open until explicitly selected.
 
 ## Source of Truth
 
-- [`PROJECT.md`](PROJECT.md) — durable engineering state, architecture, hardware, staging, and open decisions.
-- [`tasks.csv`](tasks.csv) — canonical executable work queue and task status.
-- [`project.yaml`](project.yaml) — machine-readable project state for the dashboard.
-- [`AGENTS.md`](AGENTS.md) — collaboration and engineering-record rules.
-- [`PRE_EMU_BASELINE.md`](PRE_EMU_BASELINE.md) — minimum evidence to capture before removing the known-good PowerFC architecture.
-- [`HARNESS_CONNECTORS.md`](HARNESS_CONNECTORS.md) — controlled 2ZZ/DBW connector identification, physical-verification register, and production-harness BOM starting point.
-- [`EMU_COMMISSIONING.md`](EMU_COMMISSIONING.md) — EMU hardware/software baseline, 2ZZ base-map migration record, commissioning gates, and bench/vehicle validation record.
+- [`PROJECT.md`](PROJECT.md) — durable program state, staging, hardware, and open architecture decisions.
+- [`tasks.csv`](tasks.csv) — executable work queue and status.
+- [`project.yaml`](project.yaml) — compact machine-readable project state.
+- [`AGENTS.md`](AGENTS.md) — engineering-record and collaboration rules.
+- [`BASELINE_PLUS.md`](BASELINE_PLUS.md) — authoritative interim controls/fuel/DBW/protection architecture, buy list, I/O, and sub-harness.
+- [`PRE_EMU_BASELINE.md`](PRE_EMU_BASELINE.md) — evidence to capture before PowerFC removal.
+- [`EMU_COMMISSIONING.md`](EMU_COMMISSIONING.md) — EMU hardware/software baseline, reference-map migration, and commissioning gates.
+- [`HARNESS_CONNECTORS.md`](HARNESS_CONNECTORS.md) — controlled connector verification and final-harness BOM starting point.
+- [`FINAL_SENSOR_TOPOLOGY.md`](FINAL_SENSOR_TOPOLOGY.md) — final MAP/IAT/MAF-delete/CAN-expansion direction.
 
 Related repositories:
 
 - [`celica-baseline`](https://github.com/wildc4t-workshop/celica-baseline) — current-car mechanical baseline.
-- [`Celica-engineering-knowledge`](https://github.com/wildc4t-workshop/Celica-engineering-knowledge) — shared research/reference archive.
-- [`CeliKey`](https://github.com/wildc4t-workshop/CeliKey) — standalone passive-entry/body-control project.
+- [`Celica-engineering-knowledge`](https://github.com/wildc4t-workshop/Celica-engineering-knowledge) — shared factory/reference research.
+- [`CeliKey`](https://github.com/wildc4t-workshop/CeliKey) — passive-entry/body-control project.
 - [`celica-side-projects`](https://github.com/wildc4t-workshop/celica-side-projects) — BBK and EPS.
-- [`celica-project-dashboard`](https://github.com/wildc4t-workshop/celica-project-dashboard) — public project dashboard.
+- [`celica-project-dashboard`](https://github.com/wildc4t-workshop/celica-project-dashboard) — project dashboard.
