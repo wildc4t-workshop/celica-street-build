@@ -22,13 +22,14 @@ current_direction:
   - Bench-characterize the EMU Black and verify the actual 2ZZ crank/cam trigger strategy before real-car EMU installation.
   - Treat the MWR 2023 supercharged-2ZZ Celica base map as the interim MWR-adapter I/O/integration reference, not as a ready-to-run tune.
   - Treat the Lotus 2ZZ DBW map as a DBW implementation reference, not as Celica wiring authority.
-  - Baseline Plus is the selected current-engine commissioning stage: return fuel system, EMU Black through MWR, OEM-style DBW, flex fuel, native LSU 4.9, fuel pressure, oil pressure, and tuner calibration.
+  - Baseline Plus is the selected current-engine commissioning stage: return fuel system, EMU Black through MWR, OEM-style DBW, flex fuel, native LSU 4.9, fuel pressure, oil pressure, EMU-native boost control, and tuner calibration.
   - Retain the MWR PCB for body/cluster integration while bypassing selected EMU channels through a dedicated Baseline Plus sub-harness at the short EMU-to-MWR extension harness.
   - If late-Celica OEM ETB fitment and bench validation succeed, delete the cable throttle and IAC; move VVT from H-Bridge 1A to freed AUX6 so H-Bridge 1A/1B can drive the ETB while VVL remains on H-Bridge 2A.
   - Use Radium 20-0589 with GM/Continental 13507129 for flex-fuel sensing; hold feed-line end adapters until actual hose size is physically verified.
-  - Standardize Baseline Plus fuel and oil pressure sensing on AEM 30-2130-150 stainless 0-150 psig transducers.
+  - Standardize Baseline Plus fuel and oil pressure sensing on Link ECU / Honeywell MIPS 101-0325 0-150 PSI media-isolated transducers.
   - Use Bosch LSU 4.9 0 258 017 025 / 17025 directly through the EMU Black native wideband controller; retire the external AEM UEGO controller as the ECU lambda source.
   - Measure main-gallery oil pressure from the factory 2ZZ pressure port through a short remote -3AN line; move turbo oil feed and low-pressure warning switch to an MWR MWR-901465 sandwich plate.
+  - Reuse the existing AEM Tru-Boost MAC solenoid but move PWM boost control to EMU Black G22 / Injector 6 with fused switched +12 V and an external flyback diode; disconnect the Tru-Boost controller as a solenoid driver before EMU control is enabled.
   - Treat the MWR adapter as an interim commissioning/integration tool, not the intended final harness architecture.
   - In the final custom-harness build, delete the OEM MAF assembly, replace the long internal-MAP hose with a dedicated external MAP sensor at the manifold/throttle interface, and add a dedicated post-intercooler IAT sensor representative of actual charge temperature.
   - If an ETB adapter is required, consider integrating the external MAP boss into that adapter; a compact Honda-style MAP arrangement is the packaging inspiration, but exact sensor hardware remains open.
@@ -51,6 +52,7 @@ proven_or_owned_baseline:
   - MWR 2023 supercharged 2ZZ Celica base map recovered from email and converted to V3 for inspection.
   - Lotus 2ZZ DBW reference map available for comparison.
   - MWR return-style fuel hardware with MWR rail, AEM FPR, and AEM fuel pump.
+  - Existing AEM Tru-Boost MAC boost-control solenoid is installed and will be retained as the valve while EMU Black takes over PWM control.
   - 2003-2005 Celica DBW pedal and Corolla 2ZZ intake runners.
   - Used 2003-2005 Celica GT-S 2ZZ OEM ETB ordered 2026-09-07 for 2000-manifold fitment and EMU DBW POC.
   - Moroso upgraded oil pan.
@@ -74,6 +76,7 @@ uncertain_verify:
   - Verify fuel-feed hose size before ordering Radium housing end adapters.
   - Verify oil-pressure remote sender bracket location and hose length before final plumbing purchase.
   - Verify the Baseline Plus IAT signal source/path; current working assumption is the IAT element integrated into the factory MAF assembly.
+  - Verify the existing MAC solenoid coil continuity/resistance, suppression behavior, and de-energized pneumatic failsafe before connecting it to G22 / Injector 6.
 
 open_architecture:
   - final turbo and hot-side architecture
