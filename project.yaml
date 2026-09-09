@@ -4,7 +4,7 @@ repository: wildc4t-workshop/celica-street-build
 repository_type: engineering-project
 status: active
 phase: baseline-plus
-checkpoint: 2026-09-07
+checkpoint: 2026-09-09
 
 task_prefix: STREET-
 decision_prefix: DEC-STREET-
@@ -50,8 +50,33 @@ final_selected_direction:
   body_cluster: preserve practical factory functionality
   normal_operation: conservative low-boost street calibration
 
+replacement_drivetrain_confirmed:
+  engine_builder: Monkeywrench Racing
+  invoice: MWR 107098 dated 2010-05-07
+  pistons: Mahle MAH-21090-820, 82 mm, 9.0:1 compression
+  rods: MWR-350121 4340 H-beam
+  main_bearings: MWR-300415 coated 1ZZ/2ZZ set
+  rod_bearings: MWR-300421 2ZZ set
+  valves: MWR-300820 stainless set of 16
+  retainers: MWR-300602 titanium set of 16
+  oil_pump_gears: Circuitworx CWX-OP-2ZZ
+  e153_install_kit: MWR-410101
+  flywheel: MWR-400372 forged steel 2ZZ-to-E153
+  clutch: ACT-TM1-XTSS E153/MR2-T
+  clutch_pushrod: SSI-CLROD-ZZ Speed Source
+  clutch_line: SSI-CLL-CELI7 Speed Source stainless
+  historical_turbo: Garrett GT3082R / GT30-40, GPP-GT3082R
+  record: REPLACEMENT_DRIVETRAIN.md
+
+replacement_drivetrain_current_state:
+  adapter_plate: still installed on built 2ZZ
+  flywheel_clutch: removed
+  starter: believed missing/unaccounted for
+  transmission: E153 remains substantially complete and strapped to pallet
+  reassembly_rule: inventory hardware and preserve MWR bolt-length/washer-stack locations before mating
+
 owned_or_proven:
-  - built sleeved 2ZZ with forged pistons and upgraded rods
+  - built sleeved 2ZZ with Mahle 82 mm 9.0:1 pistons and MWR 4340 H-beam rods
   - E153 factory-LSD transmission with MWR clutch/flywheel, mounts/adapters, and axles
   - complete spare Celica subframe with power-steering rack
   - EMU Black, printed flying-lead harness, and MWR adapter
@@ -78,10 +103,11 @@ verify_before_baseline_plus_install:
   - MAC coil/suppression behavior and de-energized base-boost plumbing
 
 verify_before_final_install:
-  - built-engine compression ratio
-  - valve specification
   - harmonic balancer make/model
   - built-engine valve clearance
+  - starter disposition/replacement for MWR E153 package
+  - E153 conversion hardware inventory and fastener grade/thread-pitch verification
+  - actual flywheel bolt type and pressure-plate bolt specification
   - final MAP and IAT/TMAP hardware
   - final custom-harness I/O/CAN allocation
 
@@ -104,3 +130,4 @@ dashboard:
   emu_commissioning_record: EMU_COMMISSIONING.md
   harness_connector_register: HARNESS_CONNECTORS.md
   final_sensor_topology: FINAL_SENSOR_TOPOLOGY.md
+  replacement_drivetrain_record: REPLACEMENT_DRIVETRAIN.md
