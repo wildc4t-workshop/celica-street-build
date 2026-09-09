@@ -94,18 +94,9 @@ open_architecture:
   - final protection thresholds and integrated display strategy
   - detailed chassis-side transfer list
 
-purchase_index: >-
-  STREET-008|Street Build|Street-performance tires|https://www.tirerack.com/tires/|||source;
-  STREET-019|Baseline Plus|Radium 20-0589 split-flow housing|https://sportcompactwarehouse.com/radium-split-flow-flex-fuel-sensor-adapter-20-0589/|94.95|2026-09-09|track;
-  STREET-019|Baseline Plus|GM/Continental 13507129 flex-fuel sensor|https://www.gmpartsgiant.com/parts/gm-sensor-asm-flex-fuel-13507129.html|116.55|2026-09-09|track;
-  STREET-019|Baseline Plus|Link MIPS 101-0325 150 PSI pressure sensor|https://www.ravperformance.com/products/mips-150psi-pressure-sensor-1-8-npt|130.00|2026-09-09|track;
-  STREET-019|Baseline Plus|Bosch LSU 4.9 0258017025 / 17025|https://www.awdperformanceparts.com/product/bosch-oxygen-sensor-lsu-4-9-17025-0258017025|114.79|2026-09-09|track;
-  STREET-019|Baseline Plus|MWR-901465 oil-filter sandwich adapter|https://www.monkeywrenchracing.com/product/mwr-oil-filter-sandwich-adapter-oil-temp-pressure-turbo-feed/|39.00|2026-09-09|track;
-  STREET-019|Baseline Plus|1/8 BSP male to -3AN male adapter|https://www.pegasusautoracing.com/productselection.asp?Product=3230|8.04|2026-09-09|track;
-  STREET-019|Baseline Plus|-3AN male to 1/8 NPT female adapter|https://www.pegasusautoracing.com/productselection.asp?Product=3254|11.49|2026-09-09|track
-
 dashboard:
   task_file: tasks.csv
+  purchase_file: purchases.csv
   durable_state: PROJECT.md
   agent_instructions: AGENTS.md
   baseline_plus_record: BASELINE_PLUS.md
