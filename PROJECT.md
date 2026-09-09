@@ -2,7 +2,7 @@
 
 **Vehicle:** 2000 US-spec Toyota Celica GT-S  
 **Role:** finished street car and engineering exercise platform  
-**Checkpoint:** 2026-09-07
+**Checkpoint:** 2026-09-09
 
 ## 1. Objective
 
@@ -63,6 +63,8 @@ Develop the major package offline around:
 
 Resolve packaging, service access, sensor mounting, and major control interfaces off-car wherever practical.
 
+The durable historical build record, current separated state, E153 reassembly sequence, and hardware-bin control are documented in [`REPLACEMENT_DRIVETRAIN.md`](REPLACEMENT_DRIVETRAIN.md).
+
 ### Stage D — Final swap / commissioning
 
 Desired sequence:
@@ -118,35 +120,57 @@ Detailed I/O and verification gates live in [`BASELINE_PLUS.md`](BASELINE_PLUS.m
 
 ### Engine
 
-Confirmed/recalled hardware:
+Original MWR invoice 107098 dated 2010-05-07 documents:
+
+- MWR-built 2ZZ-GE;
+- Mahle MAH-21090-820 forged pistons, 82 mm, **9.0:1 compression**;
+- MWR coated main bearing set MWR-300415;
+- MWR rod bearing set MWR-300421;
+- MWR stainless valve set MWR-300820;
+- MWR titanium valve retainers MWR-300602;
+- MWR 4340 H-beam connecting rods MWR-350121;
+- Circuitworx 2ZZ oil-pump gear set CWX-OP-2ZZ.
+
+Separately established/current hardware includes:
 
 - sleeved 2ZZ block;
-- forged low-compression pistons;
-- upgraded rods;
 - ARP main hardware, head studs, and rod bolts;
 - OEM MLS head gasket;
 - stock cams;
-- upgraded valve springs and titanium retainers;
+- upgraded valve springs;
 - new oil pump, timing chain, lift bolts, thermostat, and water pump;
 - Moroso upgraded oil pan;
 - upgraded harmonic balancer currently being installed.
 
-Still verify from build records:
+Still verify from separate records/physical inspection:
 
-- compression ratio, remembered around 9.5:1;
-- upgraded stainless valve specification;
-- balancer make/model, believed ATI;
+- harmonic balancer make/model, believed ATI;
 - valve clearance before final installation.
+
+The original MWR invoice does **not** by itself prove the sleeving, ARP hardware, valve springs, MLS gasket, later service parts, Moroso pan, or current balancer. See [`REPLACEMENT_DRIVETRAIN.md`](REPLACEMENT_DRIVETRAIN.md) for evidence separation and the full historical record.
 
 ### Transmission / chassis integration
 
 - E153 with factory LSD;
-- MWR clutch/flywheel;
-- MWR mounts/adapters;
-- MWR axles;
+- MWR E153 Install Kit MWR-410101;
+- MWR forged-steel 2ZZ-to-E153 flywheel MWR-400372;
+- ACT E153/MR2-T clutch ACT-TM1-XTSS;
+- Speed Source clutch push rod SSI-CLROD-ZZ;
+- Speed Source stainless clutch line SSI-CLL-CELI7;
+- MWR mounts/adapters and axles;
 - complete spare Celica subframe;
 - power-steering rack already on spare subframe;
 - Mishimoto radiator already on current car.
+
+Current separated state as of 2026-09-09:
+
+- MWR adapter plate remains installed on the built 2ZZ;
+- flywheel and clutch are removed;
+- starter is believed missing/unaccounted for;
+- E153 remains substantially complete and strapped to a pallet;
+- only hardware required to separate engine/transmission was removed.
+
+Reassembly hardware and washer-stack control are documented in [`REPLACEMENT_DRIVETRAIN.md`](REPLACEMENT_DRIVETRAIN.md).
 
 ## 7. Fuel / protection hardware selected for Baseline Plus
 
@@ -170,6 +194,10 @@ Selected additions:
 Exact buy state and unresolved fittings are tracked in `BASELINE_PLUS.md` / `tasks.csv`, not duplicated here.
 
 ## 8. Turbo / hot-side architecture
+
+### Historical provenance
+
+MWR invoice 107098 records a Garrett **GT3082R / GT30/40** turbocharger (GPP-GT3082R) with a GT3076-style compressor housing and no turbine housing, plus installation and dyno/street-tuning labor. This is historical provenance only and does not supersede current architecture.
 
 ### Known viable fallback
 
