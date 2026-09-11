@@ -4,6 +4,31 @@ Before removing the known-good Apexi PowerFC architecture, preserve the vehicle-
 
 This is an **evidence-capture gate**, not an attempt to fully decode Toyota body networking or directly translate the PowerFC calibration into EMU Black tables before the EMU installation.
 
+## Current known-running PowerFC reference — 2026-09-11
+
+A fresh ECU `Read All` and controlled idle diagnosis established a newer reference state than the older saved `.dat` file. The current ECU readback, not the historical file, is authoritative for pre-EMU capture.
+
+Known current settings/results include:
+
+- Rev Limit: 8300 rpm
+- VTLI High: 8900 rpm
+- VTLI Low: 5650 rpm
+- F/C A/E: 1100 rpm
+- F/C A/C: 1200 rpm
+- Idle A/E: 800 rpm
+- Idle A/C: 900 rpm
+- O2 F/B Control returned to normal operation after open-loop diagnosis
+- Idle-IG Control: ON
+- injector correction/scaling: 55.0% on all four injectors
+- Base Map 3000-load / 800-rpm cell: 2.550
+- Base Map 3000-load / 1200-rpm cell: 2.550
+
+The two Base Map cells were raised from 2.152 through a controlled A/B test after the A/C-on idle region was shown to run approximately 17.8:1 AFR with O2 feedback disabled. The final 2.550 values produced approximately 14.8-15.0:1 A/C-on open-loop AFR and effectively eliminated the prior idle hunt. Injector scaling and lag/deadtime settings were intentionally left unchanged.
+
+The Baseline repository owns the detailed diagnosis in `diagnostics/2026-09-11-powerfc-baseline.md`. Reuse those logs as part of the pre-EMU evidence set rather than recreating the same A/C-idle test solely for Street Build documentation.
+
+The unusual current VTLI High/Low relationship is preserved as observed configuration. Do **not** use the older saved-file ~5600-rpm value as the assumed acceleration lift threshold. Verify actual lift behavior/current semantics before any deliberate VVL transition capture.
+
 ## Capture set A — ECU / MPX / cluster electrical baseline
 
 Record on the actual 2000 US-spec GT-S:
@@ -60,6 +85,8 @@ Record before every log session:
 
 Preferred logged channels where FC-Datalogit exposes them: RPM, PowerFC load/map cell, TPS, ignition timing, VVT command/value, injector duty or injector pulse information, knock value, coolant temperature, intake-air temperature, vehicle speed, battery voltage, wideband AFR/lambda, and any available airflow/MAF signal. Add boost/MAP only if an independent sensor is already available; do not modify the car solely for this capture.
 
+For current FC-Datalogit work, the useful zones are Advanced + Sensor + Aux a/d. Preserve `???(2)` as the current ISC/IAC-command channel identification and use Sensor-zone `O2S` for conventional narrowband rich/lean corroboration.
+
 ### D1 — cold start and warm-up
 
 Start after an overnight or genuinely cold soak with coolant near ambient.
@@ -72,7 +99,9 @@ Start after an overnight or genuinely cold soak with coolant near ambient.
 
 ### D2 — hot idle / accessory-load steps
 
-With engine fully warm and stationary:
+The 2026-09-11 Baseline diagnostic set already contains controlled hot-idle A/C-off/A/C-on transitions, both O2-feedback-off and O2-feedback-on, plus the final corrected A/C-idle result. Preserve those raw logs as the primary current reference.
+
+If a later confirmation is useful before ECU removal, with engine fully warm and the final 800/900-rpm targets in place:
 
 1. 30 s hot idle, A/C off.
 2. Turn A/C on and hold 30 s.
@@ -112,7 +141,7 @@ With engine fully warm and in a safe road environment:
 
 The purpose is to capture acceleration enrichment / transient AFR response, not maximum performance.
 
-### D6 — decel / fuel-cut behavior
+### D6 — decel / fuel-cut and shift behavior
 
 With engine fully warm:
 
@@ -120,19 +149,23 @@ With engine fully warm:
 - fully release the throttle and remain in gear through engine braking down toward ~1500 rpm;
 - perform two clean repeats if traffic permits.
 
-Do not clutch in immediately after throttle closure; the goal is to capture overrun/fuel-cut entry and recovery.
+Do not clutch in immediately after throttle closure for the primary overrun capture; the goal is to capture fuel-cut entry and recovery.
+
+Separately, capture several normal 2-3 and/or 3-4 shifts for the current rev-hang complaint. Compare VTA/TPS return, RPM decay, `???(2)` ISC command, injector/fuel-cut behavior, AFR and vehicle speed. This shift-specific diagnosis is owned by Baseline task BASE-015, but its raw log is also useful pre-EMU evidence.
 
 ### D7 — VVL / lift transition
 
-Only when road/traction/mechanical conditions are suitable and the engine is fully warm:
+Do not schedule this capture from the historical ~5600-rpm saved-file value. The fresh ECU readback currently shows VTLI High 8900 / Low 5650, and the semantics/actual vehicle behavior must be reconciled first.
+
+Only after the actual lift transition is verified, and only when road/traction/mechanical conditions are suitable and the engine is fully warm:
 
 - use one repeatable gear that allows the event to occur safely without excessive road speed;
-- begin below 4500 rpm at moderate-to-high throttle;
-- pass cleanly through the current 5600 rpm lift threshold and continue to approximately 6500 rpm;
+- begin sufficiently below the verified transition at moderate-to-high throttle;
+- pass cleanly through the verified transition and continue only far enough to capture the event;
 - perform one or two clean repeats;
 - do not continue to redline unless needed for the separate full-load reference below.
 
-The purpose is to correlate PowerFC load, VVT strategy, timing, fueling and AFR across the lift transition.
+The purpose is to correlate PowerFC load, VVT strategy, timing, fueling and AFR across the actual lift transition, not to validate an assumed threshold.
 
 ### D8 — current full-load / boost reference
 
@@ -144,7 +177,7 @@ Perform only if the current engine is healthy, fuel pressure/AFR behavior is kno
 - one repeatable gear suitable for a controlled pull;
 - begin around 3000–3500 rpm;
 - roll smoothly to full throttle;
-- continue through lift and toward the normal high-rpm operating region;
+- continue through the known/verified operating region only;
 - one clean pull is sufficient; a second is only for repeatability if the first is questionable;
 - do not deliberately exceed the current tune's established boost/load envelope.
 
@@ -160,6 +193,7 @@ Use descriptive filenames such as:
 - `PFC_CRUISE_2000-3500_YYYY-MM-DD.csv`
 - `PFC_TIPIN_YYYY-MM-DD.csv`
 - `PFC_DECEL_YYYY-MM-DD.csv`
+- `PFC_SHIFTS_YYYY-MM-DD.csv`
 - `PFC_LIFT_YYYY-MM-DD.csv`
 - `PFC_FULLLOAD_CURRENTBOOST_YYYY-MM-DD.csv`
 
@@ -169,4 +203,4 @@ Preserve the untouched raw log first. Any cropped/annotated/derived analysis sho
 
 Do not delay the interim EMU conversion for open-ended BEAN/MPX reverse engineering or an attempted perfect PowerFC-to-EMU table translation. Capture enough baseline evidence to preserve the known-good reference state, then use the MWR Celica base map, the Lotus 2ZZ DBW reference map, actual hardware characterization and tuner validation to commission the EMU.
 
-Cross-project research conclusions may also be summarized in `Celica-engineering-knowledge`, but executable capture work is owned by this Street Build repository.
+Cross-project research conclusions may also be summarized in `Celica-engineering-knowledge`, but executable capture work is owned by this Street Build repository except for the current rev-hang drivability diagnosis retained in Baseline.
