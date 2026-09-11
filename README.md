@@ -18,6 +18,21 @@ The Street Build is intended to be the **last major drivetrain rebuild** of the 
 6. Swap the substantially complete drivetrain package into the car.
 7. Finish through calibration, tires/suspension, NVH, interior, and cosmetic refinement rather than another drivetrain redesign.
 
+## Current Handoff — 2026-09-11
+
+The major Baseline A/C / hydraulic-power-steering reassembly is complete and the current car is back in running configuration. The A/C line is supported/protected, hydraulic PS is restored, steering is recentered, the service corridor has been 3D-scanned, turbo coolant/oil-drain service is complete, and the PowerFC A/C idle hunt has been corrected with a localized base-map change.
+
+Baseline remains open for road/maintenance/administrative closeout and the seat path, but it no longer needs to consume the main engineering effort. Street Build bench/design work can proceed in parallel.
+
+Near-term Street Build focus:
+
+- finish the in-progress EMU trigger bench validation;
+- preserve a fresh native PowerFC archive from the corrected 2026-09-11 state;
+- complete remaining pre-EMU body/electrical/datalog evidence without duplicating Baseline logs;
+- physically verify the late-Celica ETB;
+- procure and bench the selected Baseline Plus controls/protection package;
+- advance built-engine/E153 verification and inventory offline.
+
 ## Current Selected Direction
 
 - Turbocharged 2ZZ remains the engine architecture.
@@ -40,14 +55,15 @@ The exact final turbo/hot-side, intake/plenum, charge-cooling package, final MAP
 - [`project.yaml`](project.yaml) — compact machine-readable project state.
 - [`AGENTS.md`](AGENTS.md) — engineering-record and collaboration rules.
 - [`BASELINE_PLUS.md`](BASELINE_PLUS.md) — authoritative interim controls/fuel/DBW/protection architecture, buy list, I/O, and sub-harness.
-- [`PRE_EMU_BASELINE.md`](PRE_EMU_BASELINE.md) — evidence to capture before PowerFC removal.
+- [`PRE_EMU_BASELINE.md`](PRE_EMU_BASELINE.md) — evidence to capture before PowerFC removal, including the corrected 2026-09-11 PowerFC reference state.
 - [`EMU_COMMISSIONING.md`](EMU_COMMISSIONING.md) — EMU hardware/software baseline, reference-map migration, and commissioning gates.
 - [`HARNESS_CONNECTORS.md`](HARNESS_CONNECTORS.md) — controlled connector verification and final-harness BOM starting point.
 - [`FINAL_SENSOR_TOPOLOGY.md`](FINAL_SENSOR_TOPOLOGY.md) — final MAP/IAT/MAF-delete/CAN-expansion direction.
+- [`REPLACEMENT_DRIVETRAIN.md`](REPLACEMENT_DRIVETRAIN.md) — replacement-engine/E153 provenance, current separated state, and controlled reassembly record.
 
 Related repositories:
 
-- [`celica-baseline`](https://github.com/wildc4t-workshop/celica-baseline) — current-car mechanical baseline.
+- [`celica-baseline`](https://github.com/wildc4t-workshop/celica-baseline) — current-car mechanical baseline and current drivability closeout.
 - [`Celica-engineering-knowledge`](https://github.com/wildc4t-workshop/Celica-engineering-knowledge) — shared factory/reference research.
 - [`CeliKey`](https://github.com/wildc4t-workshop/CeliKey) — passive-entry/body-control project.
 - [`celica-side-projects`](https://github.com/wildc4t-workshop/celica-side-projects) — BBK and EPS.
