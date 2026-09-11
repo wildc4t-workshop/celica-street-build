@@ -2,7 +2,7 @@
 
 **Vehicle:** 2000 US-spec Toyota Celica GT-S  
 **Role:** finished street car and engineering exercise platform  
-**Checkpoint:** 2026-09-09
+**Checkpoint:** 2026-09-11
 
 ## 1. Objective
 
@@ -30,13 +30,29 @@ Owned by the separate `celica-baseline` project:
 - hydraulic power steering sorted;
 - seats installed.
 
+Current handoff state as of 2026-09-11:
+
+- major A/C / hydraulic-PS reassembly is complete;
+- rare A/C line is installed, P-clipped, and protected;
+- hydraulic PS and standard accessory-drive configuration are restored;
+- steering wheel is recentered;
+- the A/C / PS / charge-pipe corridor has been 3D-scanned;
+- scan review suggests little useful space can be recovered in the current corridor without a larger redesign;
+- current charge piping is reinstalled;
+- turbo coolant lines and turbo oil drain were rebuilt;
+- engine oil was changed;
+- the PowerFC A/C idle hunt was diagnosed and corrected with a localized base-map change;
+- Baseline is now in validation / administrative closeout rather than major reassembly.
+
+The remaining Baseline work should not prevent parallel Street Build bench/design work. Baseline still owns current-car road validation, rev-hang diagnosis, maintenance closeout, state inspection/registration, and the Recaro seat path.
+
 Result: a sorted current-powertrain street car.
 
 ### Stage B — Baseline Plus
 
 Use the running current engine to validate the systems worth carrying forward:
 
-1. Preserve PowerFC calibration, datalogs, MPX/body behavior, fan/A/C behavior, and cluster dependencies.
+1. Preserve the **current corrected** PowerFC calibration, datalogs, MPX/body behavior, fan/A/C behavior, and cluster dependencies.
 2. Install the MWR return fuel system.
 3. Install EMU Black through the MWR adapter.
 4. Pull late-2ZZ OEM-style DBW forward if the purchased ETB fits and passes bench validation.
@@ -227,6 +243,8 @@ The cheap cast TD05-style manifold and inexpensive 20G are development/test hard
 
 Exact final intake/plenum/throttle/charge-cooling architecture remains open.
 
+The recent Baseline corridor scan reinforces the decision not to spend substantial effort optimizing the present passenger-side service corridor merely for the current hardware. Major packaging improvement should be evaluated in the context of the Street Build architecture, not as a prerequisite to keeping the current configuration alive.
+
 ## 10. Harness / connector strategy
 
 The final harness must be rebuildable from documentation without chat history.
@@ -241,12 +259,26 @@ Before PowerFC removal, complete the minimum evidence in [`PRE_EMU_BASELINE.md`]
 
 - body/MPX/cluster behavior;
 - fan and A/C behavior;
-- native PowerFC map archive;
-- controlled cold/hot/cruise/transient/lift/full-load reference datalogs where safe.
+- a fresh native PowerFC map archive from the corrected 2026-09-11 running state;
+- controlled cold/hot/cruise/transient/decel/shift and other safe reference datalogs where useful;
+- VVL/lift behavior only after the current VTLI configuration is reconciled against actual vehicle behavior.
+
+The 2026-09-11 Baseline diagnostic logs already establish the A/C-idle correction and should be reused rather than repeated solely to satisfy this checklist.
 
 Do not delay the EMU transition for open-ended network reverse engineering or an attempted cell-for-cell PowerFC conversion.
 
-## 12. Current open architecture
+## 12. Current execution focus
+
+Near-term Street Build effort may proceed in parallel with Baseline validation. Highest-value work remains:
+
+- finish the EMU trigger bench-validation task already in progress;
+- preserve the current corrected PowerFC state before any additional calibration changes or ECU removal;
+- complete the remaining pre-EMU electrical/body-function evidence;
+- verify the late-Celica ETB physically when the hardware is available;
+- procure/bench the selected Baseline Plus control/protection package;
+- advance the replacement-drivetrain hardware inventory and built-engine verification without taking the current car down.
+
+## 13. Current open architecture
 
 Remain deliberately open until evidence justifies selection:
 
