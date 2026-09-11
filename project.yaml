@@ -4,7 +4,7 @@ repository: wildc4t-workshop/celica-street-build
 repository_type: engineering-project
 status: active
 phase: baseline-plus
-checkpoint: 2026-09-09
+checkpoint: 2026-09-11
 
 task_prefix: STREET-
 decision_prefix: DEC-STREET-
@@ -16,10 +16,19 @@ objective: >-
   to live with.
 
 program:
-  baseline: current-car mechanical work remains in celica-baseline
+  baseline: current-car mechanical work remains in celica-baseline; major A/C/PS reassembly is complete and Baseline is now in validation/administrative closeout
   baseline_plus: validate fuel, EMU, DBW, flex fuel, lambda, pressure protection, boost control, and MWR body integration on the current engine
   replacement_drivetrain: build the built-2ZZ/E153 package offline on the spare subframe
   final: install the replacement drivetrain with cabin-mounted EMU and full custom harness
+
+current_focus:
+  - Finish the EMU Black / 2ZZ trigger bench-validation task already in progress.
+  - Preserve the corrected 2026-09-11 PowerFC state with a fresh native archive and complete the remaining pre-EMU evidence capture.
+  - Reuse the Baseline A/C diagnostic logs and forthcoming shift/rev-hang log rather than duplicating those tests solely for Street Build.
+  - Verify the late-Celica OEM ETB physically before freezing the Baseline Plus sub-harness.
+  - Procure and bench the selected Baseline Plus controls/protection package.
+  - Advance built-engine and E153 verification/inventory work offline without taking the current car down.
+  - Treat the current A/C/PS/charge-pipe corridor as good enough for Baseline; major packaging improvement belongs in the Street Build architecture.
 
 baseline_plus_selected:
   vehicle_interface: MWR adapter/PCB retained as interim body/cluster integration bridge
@@ -34,6 +43,26 @@ baseline_plus_selected:
   lambda: Bosch LSU 4.9 0 258 017 025 / 17025 direct to native EMU WBO
   oil_sandwich: MWR MWR-901465 for turbo feed plus low-pressure warning switch
   boost_control: existing Tru-Boost MAC valve on G22 / Injector 6 with external flyback diode
+
+current_powerfc_reference:
+  date: 2026-09-11
+  source_rule: fresh ECU Read All supersedes older saved .dat values
+  rev_limit_rpm: 8300
+  vtli_high_rpm: 8900
+  vtli_low_rpm: 5650
+  fuel_cut_ae_rpm: 1100
+  fuel_cut_ac_rpm: 1200
+  idle_ae_rpm: 800
+  idle_ac_rpm: 900
+  injector_correction_percent: 55.0
+  base_map_3000_800: 2.550
+  base_map_3000_1200: 2.550
+  note: >-
+    The two 3000-load idle cells were raised from 2.152 after controlled
+    O2-feedback-off testing showed approximately 17.8:1 AFR with A/C on.
+    Final A/C-on open-loop AFR stabilized around 14.8-15.0 and the idle hunt
+    effectively disappeared. VTLI High/Low behavior still requires physical
+    verification before using either value as a lift-transition test threshold.
 
 final_selected_direction:
   engine: built sleeved/forged 2ZZ
@@ -101,6 +130,7 @@ verify_before_baseline_plus_install:
   - ETB/pedal connector physical fit
   - Baseline Plus IAT source/path through factory MAF/MWR architecture
   - MAC coil/suppression behavior and de-energized base-boost plumbing
+  - actual current PowerFC VVL/lift behavior before using VTLI values as a commissioning reference
 
 verify_before_final_install:
   - harmonic balancer make/model
