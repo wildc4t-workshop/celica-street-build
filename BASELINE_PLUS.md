@@ -4,7 +4,7 @@
 **ECU:** legacy ECUMaster EMU Black, V3.061  
 **Vehicle interface:** MWR EMU Black adapter + short black/gray jumper harness  
 **Status:** SELECTED architecture; explicit physical-verification gates remain  
-**Checkpoint:** 2026-09-07
+**Checkpoint:** 2026-09-16
 
 ## 1. Purpose
 
@@ -15,6 +15,7 @@ It exists to prove the systems worth carrying into the final build while the cur
 - MWR return fuel system;
 - EMU Black through the MWR adapter;
 - late-2ZZ OEM-style DBW;
+- **AEM external MAP carried forward from the PowerFC/CeliTune development phase where I/O permits;**
 - flex fuel;
 - native Bosch LSU 4.9 lambda;
 - fuel- and oil-pressure protection;
@@ -33,13 +34,14 @@ Before PowerFC removal, complete the evidence capture in [`PRE_EMU_BASELINE.md`]
 |---|---|---|---|
 | **DEC-STREET-001** | Keep MWR as Baseline Plus integration bridge | MWR PCB + OEM 2000 harness retained; removable jumper/sub-harness carries modifications | MWR continuity and vehicle-side routing |
 | **DEC-STREET-002** | Pull DBW forward | 2003–2005 Celica GT-S ETB + owned late-Celica pedal; H-Bridge 1 controls ETB | ETB manifold fit, connector fit, DBW wizard/failsafe |
-| **DEC-STREET-003** | Standardize pressure sensors | **2 × Link ECU/Honeywell MIPS 101-0325, 0–150 PSI** | Physical installation and calibration sanity check |
+| **DEC-STREET-003** | Standardize oil/fuel pressure sensors | **2 × Link ECU/Honeywell MIPS 101-0325, 0–150 PSI** | Physical installation and calibration sanity check |
 | **DEC-STREET-004** | Add flex fuel | **Radium 20-0589** split-flow housing + **GM/Continental 13507129** ethanol sensor | Actual feed-line size/end adapters |
 | **DEC-STREET-005** | Use native wideband | **Bosch LSU 4.9 0 258 017 025 / 17025** directly to EMU Black | Harness termination and sensor commissioning |
 | **DEC-STREET-006** | Separate oil measurement from turbo feed | Factory 2ZZ pressure port -> remote Link MIPS; MWR `MWR-901465` sandwich plate -> turbo feed + warning switch | Hose/bracket geometry and switch adapter |
 | **DEC-STREET-007** | Move boost control into EMU | Existing Tru-Boost MAC valve; **G22 / Injector 6** low-side PWM | Coil/suppression check and de-energized base-boost failsafe |
+| **DEC-STREET-008** | Standardize manifold-pressure sensing across phases | **AEM 30-2130-50, 50 PSIa / nominal 3.5-bar absolute MAP** | Baseline Plus analog-input allocation; physical install; calibration/reference sanity checks |
 
-### Pressure-sensor calibration
+### Oil/fuel pressure-sensor calibration
 
 Link MIPS `101-0325` characteristics used for both fuel and oil:
 
@@ -54,6 +56,26 @@ Link MIPS `101-0325` characteristics used for both fuel and oil:
 Linear transfer function:
 
 `Pressure [psi] = 37.5 × Voltage [V] - 18.75`
+
+### MAP-sensor calibration
+
+AEM `30-2130-50` characteristics:
+
+- absolute-pressure sensor suitable for vacuum + boost;
+- 50 PSIa / nominal 3.5-bar range;
+- calibrated range **0 to 343.385 kPa absolute**;
+- 5 V ±0.5 V supply;
+- less than 6 mA supply current;
+- 0.5–4.5 V calibrated output;
+- less than 1 ms response;
+- 1/8 NPT male;
+- Packard 3-pin electrical interface.
+
+Linear transfer function used for logging/configuration:
+
+`MAP [kPa absolute] = (Voltage [V] - 0.5) × 85.84625`
+
+At nominal sea-level atmosphere the 343.385-kPa absolute ceiling corresponds to approximately 35.3 psi gauge boost. For this project, revisit sensor range if normal tuned pressure needs to exceed roughly **300 kPa absolute**, preserving useful overboost/fault headroom below the sensor ceiling.
 
 ### Boost-control electrical architecture
 
@@ -79,6 +101,9 @@ Injector 6 is unused in the recovered MWR map. Before EMU connection, verify coi
 
 | System | Item | Selected part | Qty | State |
 |---|---|---|---:|---|
+| MAP | Manifold absolute-pressure sensor | **AEM 30-2130-50, 3.5-bar absolute** | 1 | **PURCHASED 2026-09-16** |
+| MAP development | PowerFC TPS pass-through / T-harness base | **Ballenger CONN-86036** | 1 | **PURCHASED 2026-09-16** |
+| MAP connector | Spare AEM/GM 3-way receptacle kit | **Ballenger CONN-75963** | 1 | **PURCHASED 2026-09-16** |
 | Flex fuel | Split-flow housing | **Radium 20-0589** | 1 | BUY |
 | Flex fuel | Ethanol-content sensor | **GM/Continental 13507129** | 1 | BUY |
 | Flex fuel | Housing end adapters | 10AN ORB -> actual feed-line size | 2 | **HOLD until feed size measured** |
@@ -103,7 +128,7 @@ Injector 6 is unused in the recovered MWR map. Before EMU connection, verify coi
 
 ## 4. Selected interim EMU I/O allocation
 
-This allocation is authoritative for **Baseline Plus only**. The final custom harness gets its own I/O freeze later.
+This allocation is authoritative for **Baseline Plus only**, except the external-MAP row remains an explicit allocation problem because the presently documented analog inputs are consumed. The final custom harness gets its own I/O freeze later.
 
 | Function | EMU channel | Baseline Plus use |
 |---|---|---|
@@ -118,6 +143,7 @@ This allocation is authoritative for **Baseline Plus only**. The final custom ha
 | Pedal PPS check | **B30 / Analog 4** | redundant pedal position |
 | Fuel pressure | **B35 / Analog 5** | Link MIPS 101-0325 |
 | Oil pressure | **B37 / Analog 6** | Link MIPS 101-0325 |
+| **External MAP** | **TBD direct analog input** | AEM 30-2130-50; selected hardware, allocation unresolved |
 | Pedal PPS main | **B18 / TPS input** | primary pedal position |
 | Flex fuel | **B9 / Flex Fuel input** | Continental frequency signal |
 | WBO VS | **B6** | LSU 4.9 native circuit |
@@ -125,10 +151,12 @@ This allocation is authoritative for **Baseline Plus only**. The final custom ha
 | WBO RCAL | **B22** | LSU 4.9 native circuit |
 | WBO VGND | **B33** | LSU 4.9 native circuit |
 | WBO heater low side | **G19** | LSU heater control |
-| +5 V sensor reference | **B26/B34 as allocated** | TPS/PPS + pressure sensors |
+| +5 V sensor reference | **B26/B34 as allocated** | TPS/PPS + pressure/MAP sensors |
 | sensor ground | **B29/B38/B39 as allocated** | sensor returns; not chassis ground |
 
 The MWR map leaves physical switch inputs B10, B23, and B36 available unless later continuity/configuration work shows otherwise. Do not allocate them merely because they are free.
+
+**Important:** the AEM MAP hardware decision does not by itself create a free EMU analog input. Until a suitable Baseline Plus allocation is proven, the EMU internal MAP may remain the interim control MAP while the AEM sensor is preserved as the selected external sensor and is used earlier through FC-Datalogit for CeliTune development.
 
 ---
 
@@ -207,6 +235,10 @@ DBW motor polarity remains provisional until the EMU DBW wizard confirms directi
  BOOST CONTROL:
  fused EFI +12 V -> MAC coil -> G22 / INJ6 low-side PWM
                     flyback diode across coil; stripe toward +12 V
+
+ EXTERNAL MAP:
+ AEM 30-2130-50 -> direct EMU analog input TBD after I/O reconciliation
+ +5 V from EMU sensor reference; return to EMU sensor ground
 ```
 
 ### Construction rules
@@ -220,6 +252,7 @@ DBW motor polarity remains provisional until the EMU DBW wizard confirms directi
 - Build the added harness as a removable sub-harness independent of the MWR/OEM harness.
 - Label every modified MWR-jumper cavity by EMU pin and original MWR function.
 - Disconnect Tru-Boost as the MAC electrical driver before EMU boost control is enabled.
+- Do not repurpose a DBW redundancy channel or protection input for MAP merely to satisfy the selected sensor hardware; resolve the I/O architecture explicitly.
 
 ---
 
@@ -254,6 +287,8 @@ These are **verification gates, not reopened architecture decisions**:
 7. MAC coil continuity/resistance/suppression behavior before G22 connection.
 8. MAC de-energized plumbing -> mechanical spring/base boost.
 9. Baseline Plus IAT source/path; current assumption is the temperature element in the factory MAF assembly.
+10. AEM MAP connector/pinout and received sensor calibration sanity check.
+11. Resolve a proper Baseline Plus direct analog input for external MAP, or explicitly retain the EMU internal MAP until final-harness I/O is available.
 
 ---
 
@@ -263,6 +298,8 @@ Do not grow this document into the final custom-harness design. The final MAP/IA
 
 ### Primary manufacturer references
 
+- AEM `30-2130-50`: https://www.aemelectronics.com/products/sensors/map_sensor/parts/30-2130-50
+- AEM stainless pressure-sensor instructions: https://documents.aemelectronics.com/aed016c791759036e1b92adbbb7ef6d3286dd279.pdf
 - Link MIPS `101-0325`: https://dealers.linkecu.com/HWPS150
 - Radium split-flow adapter: https://www.radiumauto.com/products/split-flow-flex-fuel-sensor-adapter
 - EMU Black legacy pinout: https://www.ecumaster.com/wp/wp-content/uploads/2020/05/EMU_Black_pinout.pdf
