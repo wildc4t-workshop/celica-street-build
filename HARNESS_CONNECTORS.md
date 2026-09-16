@@ -2,7 +2,7 @@
 
 **Vehicle basis:** 2000 US-spec Toyota Celica GT-S  
 **Final controls direction:** ECUMaster EMU Black, purpose-built engine/control harness, DBW, flex fuel  
-**Checkpoint:** 2026-09-07
+**Checkpoint:** 2026-09-16
 
 ## Purpose
 
@@ -24,6 +24,7 @@ Do not promote a connector to `PRODUCTION-APPROVED` based on appearance or catal
 - Kits are grouped in a large ziplock bag on top of the built engine.
 - Physical-fit and terminal verification remain pending.
 - Baseline Plus has since selected several non-OEM sensors/actuators; their connector families are recorded below but are not yet final-harness production-approved.
+- **AEM 30-2130-50 MAP sensor, Ballenger CONN-75963 spare sensor connector kit, Ballenger CONN-86036 TPS extension, TXL wire, and open-barrel splice terminals were purchased 2026-09-16 for the PowerFC/CeliTune MAP development harness.**
 
 ## Factory references
 
@@ -43,6 +44,7 @@ Do not promote a connector to `PRODUCTION-APPROVED` based on appearance or catal
 | H07 | 2003–2005 2ZZ DBW throttle | **90980-11858** | 2005 T1 | **CONN-75805** | FACTORY-DOC + SUPPLIER-XREF; KIT RECEIVED; FIT PENDING | verify against purchased ETB |
 | H08 | 2003–2005 accelerator pedal | **90980-11144** | 2005 A17 | **CONN-76021** | FACTORY-DOC + SUPPLIER-XREF; KIT RECEIVED; FIT PENDING | verify against owned pedal |
 | H09 | alternator/generator control | **90980-11349** | 2000/2005 G2 | **CONN-75736** | FACTORY-DOC + SUPPLIER-XREF; KIT RECEIVED; FIT PENDING | verify final alternator |
+| H10 | 2000 cable-throttle TPS development pass-through | **90980-11261** | 2000 T1 | **CONN-86036 extension assembly** | FACTORY-DOC + SUPPLIER-XREF; PURCHASED; FIT PENDING | temporary removable PowerFC/CeliTune MAP T-harness; not final DBW harness hardware |
 
 ## Supplier-reported terminal/seal register
 
@@ -59,17 +61,19 @@ Supplier data is procurement evidence, not physical verification.
 | H07 | CONN-100647 | Toyota/Mazda sealed TPS/DBW application | CONN-11856 | CONN-00145 | 20–16 AWG |
 | H08 | CONN-100959 | older Toyota 090-I | CONN-11656 | CONN-00145 | 22–16 AWG class |
 | H09 | CONN-100300 | Sumitomo TS; 6189-0443 / 6189-0442 | CONN-11856 | CONN-00145 | 20–16 AWG |
+| H10 | CONN-86036 complete extension | Toyota 90980-11261 TPS extension / male-female pair | supplied assembled | supplied assembled | inspect actual received wire/termination before modification |
 
 ### Emerging commonality — do not bulk-buy yet
 
 `CONN-11856` appears across H01/H02/H03/H05/H06/H07/H09, with seal families split mainly between `CONN-00145` and `CONN-00119`. That may simplify tooling/spares, but loose-terminal quantities wait for physical verification and final wire construction.
 
-## Selected Baseline Plus non-OEM devices — connector status
+## Selected Baseline Plus / final non-OEM devices — connector status
 
-These devices are selected in [`BASELINE_PLUS.md`](BASELINE_PLUS.md). This table prevents the older “deferred hardware” language from contradicting that selection while keeping connector approval properly separate.
+These devices are selected in [`BASELINE_PLUS.md`](BASELINE_PLUS.md) and/or [`FINAL_SENSOR_TOPOLOGY.md`](FINAL_SENSOR_TOPOLOGY.md). This table prevents older “deferred hardware” language from contradicting those selections while keeping connector approval properly separate.
 
 | Device | Selected hardware | Known connector/interface | Connector status |
 |---|---|---|---|
+| **MAP sensor** | **AEM 30-2130-50, 50 PSIa / 3.5-bar absolute** | AEM specifies **Packard 3-pin**; mating connector/pin kit included with sensor; spare **Ballenger CONN-75963** purchased | **SELECTED DEVICE; PURCHASED 2026-09-16; physical fit + terminal/seal inspection pending** |
 | Fuel-pressure sensor | **Link MIPS 101-0325** | supplied 3-way Metri-Pack 150 kit | SELECTED DEVICE; inspect supplied connector/terminals before production approval |
 | Oil-pressure sensor | **Link MIPS 101-0325** | supplied 3-way Metri-Pack 150 kit | SELECTED DEVICE; same verification as fuel sensor |
 | Flex-fuel sensor | **GM/Continental 13507129** | OEM-style 3-wire ethanol-sensor connector | SELECTED DEVICE; exact production housing/terminal PN still to document |
@@ -77,19 +81,65 @@ These devices are selected in [`BASELINE_PLUS.md`](BASELINE_PLUS.md). This table
 | Boost-control solenoid | existing **Tru-Boost MAC valve** | existing 2-wire solenoid connection | SELECTED EXISTING DEVICE; characterize connector/coil before final harness decision |
 | Oil-filter sandwich / switch | **MWR MWR-901465** + relocated warning switch | pressure-switch connector depends on switch/adaptor choice | INSTALLATION DETAIL OPEN |
 
+### AEM 30-2130-50 electrical termination
+
+Manufacturer-documented electrical roles:
+
+- **Sensor Power** -> regulated +5 V sensor supply;
+- **Signal Ground** -> ECU/DAQ sensor-signal ground, not chassis ground;
+- **Signal** -> MAP / analog input.
+
+Manufacturer specifications relevant to harness design:
+
+- supply: 5 V ±0.5 V;
+- supply current: less than 6 mA;
+- output is analog and calibrated over the sensor's pressure range;
+- electrical connection: Packard 3-pin;
+- mechanical connection: 1/8 NPT male.
+
+Do not freeze cavity numbering from memory or a generic Packard diagram. Confirm the actual AEM connector/pigtail documentation and received hardware before crimping the final harness.
+
+## PowerFC / CeliTune MAP development T-harness
+
+Temporary pre-EMU architecture:
+
+```text
+OEM 2000 TPS harness connector
+        |
+        +-> Ballenger CONN-86036 pass-through -> OEM TPS
+        |
+        +-> VC / 5 V tee -----------------------> AEM MAP power
+        +-> E2 / sensor-ground tee -------------> AEM MAP ground
+                                                   +-> Datalogit ground-reference sense
+
+AEM MAP signal ----------------------------------> Datalogit auxiliary analog signal
+```
+
+Rules:
+
+- modify only the removable extension/T-harness; do not cut the OEM engine harness;
+- preserve all three TPS conductors straight-through;
+- branch only VC and E2 to power/reference the MAP sensor;
+- Datalogit signal/reference leads are development instrumentation, not part of the final EMU harness;
+- verify the exact Datalogit auxiliary pinout and intended single-ended/differential setup before termination;
+- bench continuity-check every pass-through and branch before connecting the PowerFC;
+- KOEO verify TPS remains normal and VC-to-E2 remains in the expected approximately 5 V range after the MAP load is added;
+- label the assembly as temporary development hardware so it is removed deliberately during ETB conversion.
+
 ## Final-build hardware still genuinely open
 
 Connector selection should wait for actual hardware selection for:
 
 - final injectors;
-- external MAP sensor;
-- dedicated IAT or TMAP sensor;
+- dedicated IAT sensor;
 - EMAP sensor;
 - EGT thermocouple/CAN module;
 - oil-temperature sensor;
 - coolant-pressure sensor;
 - E153 transmission switches/sensors;
 - CAN expansion modules and temporary development instrumentation.
+
+**External MAP is no longer open hardware.** The AEM 30-2130-50 is the selected sensor unless the verified operating-pressure envelope requires moving to a larger absolute-pressure range.
 
 Do not inherit connector choices blindly from the factory harness for these functions.
 
