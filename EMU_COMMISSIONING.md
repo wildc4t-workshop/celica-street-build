@@ -101,7 +101,7 @@ The hardware choice itself is owned by `BASELINE_PLUS.md`; this table records wh
 | VVT | G4 / AUX6 low-side after OCV power conversion | Verify wiring, output polarity/frequency, cam response |
 | VVL | G3 / H-Bridge 2A | Verify lift output ownership and changeover behavior |
 | Boost control | existing Tru-Boost MAC valve on G22 / Injector 6 | Verify electrical suppression, base-boost failsafe, open-loop duty before closed-loop control |
-| MAP | EMU internal MAP for Baseline Plus | Confirm hose integrity/range/calibration |
+| MAP | Selected AEM 30-2130-50 if suitable direct input is resolved; EMU internal MAP permitted as interim fallback | Verify actual channel ownership and calibration; validate external sensor against pressure reference or internal-sensor hose integrity as applicable |
 | IAT | expected OEM MAF-integrated IAT path | Verify actual input path and live response before relying on it |
 
 ## 6. Bench-validation plan
@@ -198,3 +198,4 @@ Preserve only evidence that helps reproduce or validate the setup:
 - tuner-reviewed protection settings where useful.
 
 Do not duplicate the hardware BOM, final sensor roadmap, or task queue here.
+

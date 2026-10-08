@@ -2,7 +2,7 @@
 
 **Vehicle:** 2000 US-spec Toyota Celica GT-S  
 **Role:** finished street car and engineering exercise platform  
-**Checkpoint:** 2026-09-16
+**Checkpoint:** 2026-10-08
 
 ## 1. Objective
 
@@ -238,9 +238,14 @@ Still under investigation:
 
 The cheap cast TD05-style manifold and inexpensive 20G are development/test hardware, not selected final parts.
 
+**2026-10-08 update:** the electronic wastegate actuator is received. A hand-held comparison against the MaXpeedingRods 20G suggests a nearly matching mounting flange and rod length; the side-mounted motor is the main apparent size increase over the pneumatic actuator. This is a visual comparison, not a measured or bolted-up fit check. Exact actuator identity, travel, force, control wiring, and failure behavior remain unverified. The actuator does not select the 20G or replace the selected Baseline Plus MAC/pneumatic architecture. See [`DBW_EWG_MOCKUP.md`](DBW_EWG_MOCKUP.md).
+
 ## 9. Intake / charge / DBW
 
-- 2003–2005 Celica GT-S OEM ETB purchased 2026-09-07 for fitment/POC.
+- OEM 2003–2005 Celica GT-S ETB is in hand (receipt previously reported 2026-10-01); the earlier ordered/used description is historical, not the current delivery state. Exact part number remains to be recorded.
+- Spare 2000–2002 intake manifold purchased from a Celica buddy for **$60** and available for built-engine mockup, reported 2026-10-08.
+- **OBSERVED / USER-REPORTED — 2026-10-08:** eTB bolt pattern matches the 2000–2002 manifold. Full gasket/bore, motor/vacuum-fitting clearance, unobstructed throttle travel, and electrical validation remain open.
+- **HYPOTHESIS:** later vacuum fittings may have been angled upward to clear the eTB motor. Removing existing hose connections and installing threaded ORB/AN fittings is an investigation, not a selected machining operation. See [`DBW_EWG_MOCKUP.md`](DBW_EWG_MOCKUP.md).
 - 2003–2005 Celica accelerator pedal owned.
 - If the late ETB needs an adapter, the adapter may also integrate the final pressure takeoff / mounting interface for the **AEM 30-2130-50**.
 - Corolla 2ZZ runners remain available development hardware.
@@ -284,7 +289,7 @@ Near-term Street Build effort may proceed in parallel with Baseline validation. 
 - preserve the current corrected PowerFC state before any additional calibration changes or ECU removal;
 - build and verify the removable TPS/MAP development T-harness and establish trustworthy physical-MAP logging for CeliTune;
 - complete the remaining pre-EMU electrical/body-function evidence;
-- verify the late-Celica ETB physically when the hardware is available;
+- complete ETB clearance/sealing verification using the received throttle and spare manifold; the bolt-pattern match is already user-observed;
 - procure/bench the selected Baseline Plus control/protection package;
 - advance the replacement-drivetrain hardware inventory and built-engine verification without taking the current car down.
 
@@ -303,3 +308,4 @@ Remain deliberately open until evidence justifies selection:
 - detailed chassis-side transfer list for swap day.
 
 The **MAP sensor model and nominal pressure range are no longer open architecture decisions**. Reopen the 3.5-bar selection only if measured/tuned operating pressure shows the current range cannot preserve adequate overboost headroom. Selected Baseline Plus hardware should not be repeatedly reopened unless new evidence creates a reason.
+

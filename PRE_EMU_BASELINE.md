@@ -83,7 +83,7 @@ Record before every log session:
 - gear used for each loaded test;
 - any known mechanical or calibration issue.
 
-Preferred logged channels where FC-Datalogit exposes them: RPM, PowerFC load/map cell, TPS, ignition timing, VVT command/value, injector duty or injector pulse information, knock value, coolant temperature, intake-air temperature, vehicle speed, battery voltage, wideband AFR/lambda, and any available airflow/MAF signal. Add boost/MAP only if an independent sensor is already available; do not modify the car solely for this capture.
+Preferred logged channels where FC-Datalogit exposes them: RPM, PowerFC load/map cell, TPS, ignition timing, VVT command/value, injector duty or injector pulse information, knock value, coolant temperature, intake-air temperature, vehicle speed, battery voltage, wideband AFR/lambda, and any available airflow/MAF signal. The selected AEM 30-2130-50 and removable TPS T-harness are the documented physical-MAP development path; add validated MAP to the logs where practical as defined in `FINAL_SENSOR_TOPOLOGY.md`. Do not delay the EMU transition for further optional instrumentation beyond this defined work.
 
 For current FC-Datalogit work, the useful zones are Advanced + Sensor + Aux a/d. Preserve `???(2)` as the current ISC/IAC-command channel identification and use Sensor-zone `O2S` for conventional narrowband rich/lean corroboration.
 
@@ -204,3 +204,4 @@ Preserve the untouched raw log first. Any cropped/annotated/derived analysis sho
 Do not delay the interim EMU conversion for open-ended BEAN/MPX reverse engineering or an attempted perfect PowerFC-to-EMU table translation. Capture enough baseline evidence to preserve the known-good reference state, then use the MWR Celica base map, the Lotus 2ZZ DBW reference map, actual hardware characterization and tuner validation to commission the EMU.
 
 Cross-project research conclusions may also be summarized in `Celica-engineering-knowledge`, but executable capture work is owned by this Street Build repository except for the current rev-hang drivability diagnosis retained in Baseline.
+
