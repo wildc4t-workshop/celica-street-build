@@ -46,7 +46,14 @@ Near-term Street Build focus:
 - The built 2ZZ, E153, and spare subframe form the replacement drivetrain module.
 - The current car stays usable as long as practical.
 
-The exact final turbo/hot-side, intake/plenum, charge-cooling package, final MAP/IAT hardware, CAN expansion hardware, and detailed final protection thresholds remain open until explicitly selected.
+The exact final turbo/hot-side, intake/plenum, charge-cooling package, dedicated IAT hardware, AEM MAP mounting/input allocation, CAN expansion hardware, and detailed final protection thresholds remain open. **AEM 30-2130-50 is already selected as the cross-phase MAP sensor.**
+
+## Hardware update — 2026-10-08
+
+- OEM late-Celica ETB and a **$60 spare 2000–2002 intake manifold** are available for built-engine mockup; the user reports a matching bolt pattern.
+- Vacuum-fitting relocation/ORB or AN conversion remains a concept; the proposed factory clearance rationale is a hypothesis.
+- eWG actuator received; visual comparison with the MaXpeedingRods 20G suggests a close flange/rod match. Measured fit and powered validation remain open.
+- Detailed evidence and next checks: [`DBW_EWG_MOCKUP.md`](DBW_EWG_MOCKUP.md). Baseline Plus still uses the selected MAC/pneumatic boost-control path.
 
 ## Source of Truth
 
@@ -68,3 +75,4 @@ Related repositories:
 - [`CeliKey`](https://github.com/wildc4t-workshop/CeliKey) — passive-entry/body-control project.
 - [`celica-side-projects`](https://github.com/wildc4t-workshop/celica-side-projects) — BBK and EPS.
 - [`celica-project-dashboard`](https://github.com/wildc4t-workshop/celica-project-dashboard) — project dashboard.
+

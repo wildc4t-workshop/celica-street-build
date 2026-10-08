@@ -4,7 +4,7 @@ repository: wildc4t-workshop/celica-street-build
 repository_type: engineering-project
 status: active
 phase: baseline-plus
-checkpoint: 2026-09-11
+checkpoint: 2026-10-08
 
 task_prefix: STREET-
 decision_prefix: DEC-STREET-
@@ -72,8 +72,8 @@ final_selected_direction:
   dbw: required
   flex_fuel: required
   maf: delete
-  map: local external sensor near throttle/manifold interface
-  iat: dedicated post-intercooler IAT or justified TMAP
+  map: AEM 30-2130-50 selected; local mounting and direct analog-input allocation remain open
+  iat: dedicated post-intercooler IAT; exact hardware open; TMAP not preferred with selected AEM MAP
   can_expansion: secondary/development instrumentation such as EMAP, multi-channel EGT, oil temperature, coolant pressure
   ac: retain
   body_cluster: preserve practical factory functionality
@@ -114,7 +114,10 @@ owned_or_proven:
   - MWR return fuel hardware, MWR rail, AEM FPR, and AEM pump
   - existing Tru-Boost MAC boost-control solenoid
   - 2003-2005 Celica DBW pedal
-  - used 2003-2005 Celica GT-S ETB ordered 2026-09-07
+  - OEM 2003-2005 Celica GT-S ETB received; bolt-pattern match on 2000-2002 manifold user-observed 2026-10-08
+  - spare 2000-2002 intake manifold acquired for USD 60 and available for built-engine mockup
+  - electronic wastegate actuator received; exact identity and powered validation pending
+  - AEM 30-2130-50 MAP selected across PowerFC development, Baseline Plus, and final build
   - first-pass Ballenger OEM connector verification kits received 2026-09-01
   - Moroso oil pan
   - Mishimoto radiator
@@ -122,7 +125,7 @@ owned_or_proven:
   - cheap TD05-style manifold and 20G as development hardware
 
 verify_before_baseline_plus_install:
-  - ETB fit on 2000 intake manifold
+  - Complete ETB sealing and motor/vacuum-fitting clearance checks; bolt pattern already matches by user observation
   - MWR jumper and OCV+/OCV- routing before DBW/VVT repinning
   - actual fuel-feed hose size before Radium end adapters
   - oil-pressure remote-sender bracket and hose length
@@ -138,14 +141,15 @@ verify_before_final_install:
   - starter disposition/replacement for MWR E153 package
   - E153 conversion hardware inventory and fastener grade/thread-pitch verification
   - actual flywheel bolt type and pressure-plate bolt specification
-  - final MAP and IAT/TMAP hardware
+  - selected AEM MAP mounting and input allocation; dedicated IAT hardware
   - final custom-harness I/O/CAN allocation
 
 open_architecture:
   - final turbo/hot-side architecture
   - final intake/plenum/throttle-body architecture after ETB POC
   - final charge-cooling architecture
-  - exact final external MAP and IAT/TMAP hardware
+  - selected AEM MAP mounting/input allocation and exact dedicated IAT hardware
+  - eWG actuator integration after measured fit and electrical/control validation
   - CAN expansion hardware and secondary instrumentation set
   - final protection thresholds and integrated display strategy
   - detailed chassis-side transfer list
@@ -161,3 +165,5 @@ dashboard:
   harness_connector_register: HARNESS_CONNECTORS.md
   final_sensor_topology: FINAL_SENSOR_TOPOLOGY.md
   replacement_drivetrain_record: REPLACEMENT_DRIVETRAIN.md
+  dbw_ewg_mockup_record: DBW_EWG_MOCKUP.md
+

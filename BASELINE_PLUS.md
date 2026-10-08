@@ -4,7 +4,7 @@
 **ECU:** legacy ECUMaster EMU Black, V3.061  
 **Vehicle interface:** MWR EMU Black adapter + short black/gray jumper harness  
 **Status:** SELECTED architecture; explicit physical-verification gates remain  
-**Checkpoint:** 2026-09-16
+**Checkpoint:** 2026-10-08
 
 ## 1. Purpose
 
@@ -79,7 +79,9 @@ At nominal sea-level atmosphere the 343.385-kPa absolute ceiling corresponds to 
 
 ### Boost-control electrical architecture
 
-The existing Tru-Boost MAC valve is retained as the pneumatic actuator only. The Tru-Boost controller must not remain connected as a second solenoid driver.
+The eWG received by 2026-10-08 is a separate development investigation documented in [`DBW_EWG_MOCKUP.md`](DBW_EWG_MOCKUP.md). It has not replaced DEC-STREET-007 or earned an interim EMU output allocation.
+
+The existing Tru-Boost MAC valve is retained as the pressure-control solenoid for the pneumatic wastegate actuator. The Tru-Boost controller must not remain connected as a second solenoid driver.
 
 ```text
 fused EFI-switched +12 V
@@ -119,7 +121,7 @@ Injector 6 is unused in the recovered MWR map. Before EMU connection, verify coi
 | Oil system | Warning-switch relocation | NPT-compatible switch or correct BSP/NPT adapter | 1 | VERIFY before buy |
 | Boost control | MAC 3-port valve from Tru-Boost | existing hardware | 1 | **OWNED** |
 | Boost control | Flyback diode | automotive diode suitable for MAC coil | 1 | BUY during harness build |
-| DBW | 2003–2005 Celica GT-S ETB | OEM late-Celica ETB | 1 | **PURCHASED 2026-09-07** |
+| DBW | 2003–2005 Celica GT-S ETB | OEM late-Celica ETB | 1 | **RECEIVED; bolt-pattern match user-observed 2026-10-08; full fit/bench pending** |
 | DBW | 2003–2005 Celica pedal | OEM late-Celica pedal | 1 | **OWNED** |
 | DBW | ETB/pedal connector samples | Ballenger kits | 2 | **OWNED / fit verification pending** |
 | Harness | EMU terminals/wire | existing printed flying-lead harness | as needed | **OWNED** |
@@ -278,7 +280,7 @@ EGT is intentionally deferred because meaningful pre-turbine installation on the
 
 These are **verification gates, not reopened architecture decisions**:
 
-1. ETB -> 2000 manifold fit: bolt pattern, bore/gasket alignment, motor clearance, charge-pipe orientation.
+1. ETB -> 2000–2002 manifold fit: bolt pattern matches per user observation 2026-10-08; complete bore/gasket alignment, motor/vacuum-fitting clearance, and charge-pipe orientation checks on the $60 spare manifold. See [`DBW_EWG_MOCKUP.md`](DBW_EWG_MOCKUP.md).
 2. MWR jumper routing: identify G2/G4/G10/G3 destinations and factory OCV+/OCV− paths before VVT/DBW repinning.
 3. Fuel-feed hose size before buying Radium end adapters.
 4. Oil-sender bracket location before choosing hose length/end geometry.
@@ -305,3 +307,4 @@ Do not grow this document into the final custom-harness design. The final MAP/IA
 - EMU Black legacy pinout: https://www.ecumaster.com/wp/wp-content/uploads/2020/05/EMU_Black_pinout.pdf
 - MWR sandwich plate: https://www.monkeywrenchracing.com/product/mwr-oil-filter-sandwich-adapter-oil-temp-pressure-turbo-feed/
 - Bosch LSU 4.9: https://www.bosch-motorsport.com/content/downloads/Raceparts/en-GB/51865867208058251.html
+

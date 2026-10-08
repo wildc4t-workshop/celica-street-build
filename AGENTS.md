@@ -106,8 +106,8 @@ Authoritative sensor direction: [`FINAL_SENSOR_TOPOLOGY.md`](FINAL_SENSOR_TOPOLO
 - full custom engine/control harness;
 - EMU mounted in cabin;
 - MAF deleted;
-- local external MAP near throttle/manifold interface;
-- dedicated post-intercooler IAT or justified TMAP;
+- selected AEM 30-2130-50 external MAP near throttle/manifold interface; final mounting/input allocation remains open;
+- dedicated post-intercooler IAT; TMAP is not preferred unless a new requirement justifies replacing/duplicating the selected AEM pressure channel;
 - CAN expansion used primarily for secondary/development channels such as EMAP, multi-channel EGT, oil temp, coolant pressure, etc.
 
 Do not move proven critical direct signals onto CAN merely to make the architecture visually uniform.
@@ -164,7 +164,7 @@ Known hot-side fallback: existing TurboKits.com T28-flanged architecture.
 
 Modular sidewinder remains an investigation, not a selected final architecture. Cheap TD05-style manifold/20G hardware are development aids.
 
-DBW is selected, but the purchased 2003–2005 Celica GT-S ETB still requires physical fit and electrical validation on the 2000 manifold.
+DBW is selected. The 2003–2005 Celica GT-S ETB and a spare 2000–2002 manifold are in hand. The user reports a matching bolt pattern (2026-10-08); complete clearance/sealing and electrical validation remain open. `DBW_EWG_MOCKUP.md` owns the intake/eWG observations and hypotheses. The received eWG is development hardware; do not replace the selected Baseline Plus MAC/pneumatic architecture without a validated decision.
 
 A2W remains optional. Existing TurboKits.com intercooling remains a viable baseline.
 
@@ -188,3 +188,4 @@ Final secondary/development instrumentation remains open and should be selected 
 - `CeliKey` — passive entry/body-control/keyless-start R&D.
 - `celica-side-projects` — BBK and EPS.
 - `Celica-engineering-knowledge` — shared factory/reference knowledge.
+
